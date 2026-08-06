@@ -5,6 +5,8 @@
   Scan repositories, infer dependency relationships, and explore the graph in a modern React UI.
 </p>
 
+🔗 [Project page](https://kshitijmishradev.github.io/Architech_CLI/)
+
 <p align="center">
   <img alt="Python" src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white" />
   <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-API-009688?logo=fastapi&logoColor=white" />
