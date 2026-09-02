@@ -46,6 +46,14 @@ docker compose up --build
 
 The Docker stack is available at `http://127.0.0.1:5173`. It mounts only the current repository as read-only and stores analysis metadata in a dedicated volume.
 
+To analyze another repository without editing Compose, set `ARCHITECT_REPO` to its absolute path:
+
+```bash
+ARCHITECT_REPO=/absolute/path/to/another/repository docker compose up --build
+```
+
+For a persistent local setting, copy `.env.example` to `.env`, set `ARCHITECT_REPO`, and then use the normal `docker compose up --build` command. After changing repositories, restart the stack with `docker compose down` followed by `docker compose up --build`.
+
 ## CLI
 
 ```text

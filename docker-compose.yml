@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile.backend
     expose: ["8000"]
     volumes:
-      - ./:/workspace:ro
+      - ${ARCHITECT_REPO:-.}:/workspace:ro
       - architect-data:/data
     environment:
       ARCHITECT_ROOT: /workspace
