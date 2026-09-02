@@ -6,9 +6,11 @@ __pycache__/
 .architect_cache.json
 .architect_analysis_store.json
 .architect/
+.vinyas/
 .env
 *.sarif
 architect-report.html
+vinyas-report.html
 .coverage
 .pytest_cache/
 .mypy_cache/
