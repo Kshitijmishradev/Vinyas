@@ -1,0 +1,1096 @@
+{
+  "cycles": [],
+  "edges": [
+    {
+      "confidence": "exact",
+      "evidence": "from architect.models import Symbol",
+      "line": 11,
+      "resolution": "python-module",
+      "source": "architect/analyzers.py",
+      "target": "architect/models.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.engine import AnalysisCancelled, analyze_repository",
+      "line": 12,
+      "resolution": "python-module",
+      "source": "architect/api_server.py",
+      "target": "architect/engine.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.explanations import explain_finding",
+      "line": 13,
+      "resolution": "python-module",
+      "source": "architect/api_server.py",
+      "target": "architect/explanations.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.storage import AnalysisStore",
+      "line": 14,
+      "resolution": "python-module",
+      "source": "architect/api_server.py",
+      "target": "architect/storage.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.engine import analyze_repository",
+      "line": 10,
+      "resolution": "python-module",
+      "source": "architect/baseline.py",
+      "target": "architect/engine.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.models import AnalysisGraph",
+      "line": 11,
+      "resolution": "python-module",
+      "source": "architect/baseline.py",
+      "target": "architect/models.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.baseline import active_fingerprints, load_baseline",
+      "line": 9,
+      "resolution": "python-module",
+      "source": "architect/cli.py",
+      "target": "architect/baseline.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.engine import analyze_repository",
+      "line": 10,
+      "resolution": "python-module",
+      "source": "architect/cli.py",
+      "target": "architect/engine.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.reports import render_report",
+      "line": 11,
+      "resolution": "python-module",
+      "source": "architect/cli.py",
+      "target": "architect/reports.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.analyzers import (",
+      "line": 10,
+      "resolution": "python-module",
+      "source": "architect/engine.py",
+      "target": "architect/analyzers.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.config import ArchitectConfig, _matches, load_config",
+      "line": 18,
+      "resolution": "python-module",
+      "source": "architect/engine.py",
+      "target": "architect/config.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.models import AnalysisGraph, DependencyEdge, FileMetrics, FileNode, Finding",
+      "line": 19,
+      "resolution": "python-module",
+      "source": "architect/engine.py",
+      "target": "architect/models.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.models import AnalysisGraph",
+      "line": 8,
+      "resolution": "python-module",
+      "source": "architect/reports.py",
+      "target": "architect/models.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import { analysisResults, analysisStatus, cancelAnalysis, explainFinding, serverHealth, startAnalysis } from './api'",
+      "line": 3,
+      "resolution": "js-module",
+      "source": "frontend/src/App.tsx",
+      "target": "frontend/src/api.ts"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import { DependencyGraph } from './components/DependencyGraph'",
+      "line": 4,
+      "resolution": "js-module",
+      "source": "frontend/src/App.tsx",
+      "target": "frontend/src/components/DependencyGraph.tsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import type { FileNode, Finding, Graph, Job } from './types'",
+      "line": 5,
+      "resolution": "js-module",
+      "source": "frontend/src/App.tsx",
+      "target": "frontend/src/types.ts"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import type { Finding, Graph, Job } from './types'",
+      "line": 1,
+      "resolution": "js-module",
+      "source": "frontend/src/api.ts",
+      "target": "frontend/src/types.ts"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import type { Edge, FileNode } from '../types'",
+      "line": 2,
+      "resolution": "js-module",
+      "source": "frontend/src/components/DependencyGraph.tsx",
+      "target": "frontend/src/types.ts"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import App from './App.tsx'",
+      "line": 4,
+      "resolution": "js-module",
+      "source": "frontend/src/main.tsx",
+      "target": "frontend/src/App.tsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.cli import main",
+      "line": 8,
+      "resolution": "python-module",
+      "source": "tests/test_cli.py",
+      "target": "architect/cli.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.engine import analyze_repository, strongly_connected_cycles",
+      "line": 7,
+      "resolution": "python-module",
+      "source": "tests/test_engine.py",
+      "target": "architect/engine.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.models import DependencyEdge",
+      "line": 8,
+      "resolution": "python-module",
+      "source": "tests/test_engine.py",
+      "target": "architect/models.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.baseline import active_fingerprints",
+      "line": 8,
+      "resolution": "python-module",
+      "source": "tests/test_governance_and_reports.py",
+      "target": "architect/baseline.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.engine import analyze_repository",
+      "line": 9,
+      "resolution": "python-module",
+      "source": "tests/test_governance_and_reports.py",
+      "target": "architect/engine.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.reports import html_report, sarif_report",
+      "line": 10,
+      "resolution": "python-module",
+      "source": "tests/test_governance_and_reports.py",
+      "target": "architect/reports.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from architect.storage import AnalysisStore",
+      "line": 7,
+      "resolution": "python-module",
+      "source": "tests/test_storage.py",
+      "target": "architect/storage.py"
+    }
+  ],
+  "external_count": 107,
+  "files": [
+    {
+      "content_hash": "f273dd6214e5e0422b6d8b09dca7f27f021b6124316e4e180160095e208e61fa",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 0
+      },
+      "path": "architect/__init__.py",
+      "symbols": []
+    },
+    {
+      "content_hash": "86a24fb5a702b898a29bf0a3b1aa85a6fb935ccf9c1dc27152b7b05240536b05",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 1,
+        "fan_in": 1,
+        "fan_out": 1,
+        "symbol_count": 13
+      },
+      "path": "architect/analyzers.py",
+      "symbols": [
+        {
+          "kind": "class",
+          "line": 18,
+          "name": "ImportReference"
+        },
+        {
+          "kind": "class",
+          "line": 28,
+          "name": "ParsedFile"
+        },
+        {
+          "kind": "class",
+          "line": 36,
+          "name": "PythonAnalyzer"
+        },
+        {
+          "kind": "function",
+          "line": 39,
+          "name": "parse"
+        },
+        {
+          "kind": "class",
+          "line": 89,
+          "name": "JavaScriptAnalyzer"
+        },
+        {
+          "kind": "function",
+          "line": 92,
+          "name": "parse"
+        },
+        {
+          "kind": "function",
+          "line": 117,
+          "name": "analyzer_for"
+        },
+        {
+          "kind": "function",
+          "line": 125,
+          "name": "python_module_index"
+        },
+        {
+          "kind": "function",
+          "line": 140,
+          "name": "resolve_python"
+        },
+        {
+          "kind": "function",
+          "line": 181,
+          "name": "load_tsconfig_aliases"
+        },
+        {
+          "kind": "function",
+          "line": 196,
+          "name": "resolve_javascript"
+        },
+        {
+          "kind": "function",
+          "line": 243,
+          "name": "_line"
+        },
+        {
+          "kind": "function",
+          "line": 247,
+          "name": "_hash"
+        }
+      ]
+    },
+    {
+      "content_hash": "1f2b4b84cca284bd33eb82e71f4283fe4f41b6937e6fa9b45004897afd90e31a",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 2,
+        "fan_in": 0,
+        "fan_out": 3,
+        "symbol_count": 12
+      },
+      "path": "architect/api_server.py",
+      "symbols": [
+        {
+          "kind": "class",
+          "line": 22,
+          "name": "CreateAnalysisRequest"
+        },
+        {
+          "kind": "class",
+          "line": 26,
+          "name": "ExplanationRequest"
+        },
+        {
+          "kind": "function",
+          "line": 40,
+          "name": "_safe_root"
+        },
+        {
+          "kind": "function",
+          "line": 51,
+          "name": "_run_analysis"
+        },
+        {
+          "kind": "function",
+          "line": 66,
+          "name": "_analysis"
+        },
+        {
+          "kind": "function",
+          "line": 75,
+          "name": "health"
+        },
+        {
+          "kind": "function",
+          "line": 80,
+          "name": "create_analysis"
+        },
+        {
+          "kind": "function",
+          "line": 88,
+          "name": "get_analysis"
+        },
+        {
+          "kind": "function",
+          "line": 97,
+          "name": "get_findings"
+        },
+        {
+          "kind": "function",
+          "line": 105,
+          "name": "get_graph"
+        },
+        {
+          "kind": "function",
+          "line": 114,
+          "name": "create_explanation"
+        },
+        {
+          "kind": "function",
+          "line": 129,
+          "name": "delete_analysis"
+        }
+      ]
+    },
+    {
+      "content_hash": "570d3a12cb3d2aaf641f681864220a43a90584897aa824f1e96a4d35ad05579f",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 2,
+        "fan_in": 2,
+        "fan_out": 2,
+        "symbol_count": 2
+      },
+      "path": "architect/baseline.py",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 14,
+          "name": "active_fingerprints"
+        },
+        {
+          "kind": "function",
+          "line": 26,
+          "name": "load_baseline"
+        }
+      ]
+    },
+    {
+      "content_hash": "494e1f755974aa977448fd1e41975d6bec0a62c1afd09c49b0b047d83affe926",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 2,
+        "fan_in": 1,
+        "fan_out": 3,
+        "symbol_count": 4
+      },
+      "path": "architect/cli.py",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 14,
+          "name": "build_parser"
+        },
+        {
+          "kind": "function",
+          "line": 49,
+          "name": "_path_arguments"
+        },
+        {
+          "kind": "function",
+          "line": 54,
+          "name": "_write"
+        },
+        {
+          "kind": "function",
+          "line": 63,
+          "name": "main"
+        }
+      ]
+    },
+    {
+      "content_hash": "700d391372e604ceefecb04034c8aec3ea111924fb63369275af1b88c68cdeb6",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 10
+      },
+      "path": "architect/config.py",
+      "symbols": [
+        {
+          "kind": "class",
+          "line": 21,
+          "name": "Layer"
+        },
+        {
+          "kind": "class",
+          "line": 27,
+          "name": "Suppression"
+        },
+        {
+          "kind": "class",
+          "line": 35,
+          "name": "ArchitectConfig"
+        },
+        {
+          "kind": "function",
+          "line": 51,
+          "name": "included"
+        },
+        {
+          "kind": "function",
+          "line": 57,
+          "name": "excluded"
+        },
+        {
+          "kind": "function",
+          "line": 61,
+          "name": "layer_for"
+        },
+        {
+          "kind": "function",
+          "line": 68,
+          "name": "_matches"
+        },
+        {
+          "kind": "function",
+          "line": 79,
+          "name": "_as_list"
+        },
+        {
+          "kind": "function",
+          "line": 87,
+          "name": "load_config"
+        },
+        {
+          "kind": "function",
+          "line": 103,
+          "name": "dependency_pairs"
+        }
+      ]
+    },
+    {
+      "content_hash": "c97ceca4067390de8bd69597bd4d9ed4a9df907ced15f3e714582e0c6bef2b6f",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 1,
+        "fan_in": 5,
+        "fan_out": 3,
+        "symbol_count": 11
+      },
+      "path": "architect/engine.py",
+      "symbols": [
+        {
+          "kind": "class",
+          "line": 22,
+          "name": "AnalysisCancelled"
+        },
+        {
+          "kind": "function",
+          "line": 30,
+          "name": "analyze_repository"
+        },
+        {
+          "kind": "function",
+          "line": 134,
+          "name": "_discover"
+        },
+        {
+          "kind": "function",
+          "line": 151,
+          "name": "_dedupe_edges"
+        },
+        {
+          "kind": "function",
+          "line": 156,
+          "name": "strongly_connected_cycles"
+        },
+        {
+          "kind": "function",
+          "line": 171,
+          "name": "visit"
+        },
+        {
+          "kind": "function",
+          "line": 200,
+          "name": "_governance_findings"
+        },
+        {
+          "kind": "function",
+          "line": 265,
+          "name": "_compute_metrics"
+        },
+        {
+          "kind": "function",
+          "line": 280,
+          "name": "depth"
+        },
+        {
+          "kind": "function",
+          "line": 305,
+          "name": "_apply_suppressions"
+        },
+        {
+          "kind": "function",
+          "line": 318,
+          "name": "_finding"
+        }
+      ]
+    },
+    {
+      "content_hash": "b45af877b49317d43ce512493bf07e22601a35d9374b92c343545f82fc547003",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 1
+      },
+      "path": "architect/explanations.py",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 7,
+          "name": "explain_finding"
+        }
+      ]
+    },
+    {
+      "content_hash": "5af22587f056998ec56398a558f889874f5c7b109961e668087e09466643e924",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 5,
+        "fan_out": 0,
+        "symbol_count": 8
+      },
+      "path": "architect/models.py",
+      "symbols": [
+        {
+          "kind": "class",
+          "line": 8,
+          "name": "Symbol"
+        },
+        {
+          "kind": "class",
+          "line": 15,
+          "name": "FileMetrics"
+        },
+        {
+          "kind": "class",
+          "line": 24,
+          "name": "FileNode"
+        },
+        {
+          "kind": "class",
+          "line": 33,
+          "name": "DependencyEdge"
+        },
+        {
+          "kind": "function",
+          "line": 42,
+          "name": "key"
+        },
+        {
+          "kind": "class",
+          "line": 47,
+          "name": "Finding"
+        },
+        {
+          "kind": "class",
+          "line": 60,
+          "name": "AnalysisGraph"
+        },
+        {
+          "kind": "function",
+          "line": 70,
+          "name": "to_dict"
+        }
+      ]
+    },
+    {
+      "content_hash": "e1a859243e6ab8f8b3feedfd51c3df81d9a3da19c92f00722c37312a78430451",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 1,
+        "fan_in": 2,
+        "fan_out": 1,
+        "symbol_count": 5
+      },
+      "path": "architect/reports.py",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 11,
+          "name": "json_report"
+        },
+        {
+          "kind": "function",
+          "line": 15,
+          "name": "sarif_report"
+        },
+        {
+          "kind": "function",
+          "line": 32,
+          "name": "_sarif_result"
+        },
+        {
+          "kind": "function",
+          "line": 47,
+          "name": "html_report"
+        },
+        {
+          "kind": "function",
+          "line": 68,
+          "name": "render_report"
+        }
+      ]
+    },
+    {
+      "content_hash": "2aeec15c11105fec5028795ad10037487a852bbb317bd2130ee8223fc7915feb",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 2,
+        "fan_out": 0,
+        "symbol_count": 9
+      },
+      "path": "architect/storage.py",
+      "symbols": [
+        {
+          "kind": "class",
+          "line": 13,
+          "name": "AnalysisStore"
+        },
+        {
+          "kind": "function",
+          "line": 14,
+          "name": "__init__"
+        },
+        {
+          "kind": "function",
+          "line": 21,
+          "name": "_connection"
+        },
+        {
+          "kind": "function",
+          "line": 26,
+          "name": "create"
+        },
+        {
+          "kind": "function",
+          "line": 33,
+          "name": "get"
+        },
+        {
+          "kind": "function",
+          "line": 45,
+          "name": "update"
+        },
+        {
+          "kind": "function",
+          "line": 55,
+          "name": "cancel"
+        },
+        {
+          "kind": "function",
+          "line": 61,
+          "name": "cancelled"
+        },
+        {
+          "kind": "function",
+          "line": 65,
+          "name": "delete"
+        }
+      ]
+    },
+    {
+      "content_hash": "4efe97b16d1200fac0eaf07aa00930a8668b1f96a0be1891ace8c1e712ff0ccb",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 0
+      },
+      "path": "frontend/eslint.config.js",
+      "symbols": []
+    },
+    {
+      "content_hash": "0b102bb589ea48d08fe366b1be85792d6a0a98a4d9a2793fd5711f5fddf4a714",
+      "language": "typescript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 1,
+        "fan_in": 1,
+        "fan_out": 3,
+        "symbol_count": 8
+      },
+      "path": "frontend/src/App.tsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 9,
+          "name": "App"
+        },
+        {
+          "kind": "function",
+          "line": 47,
+          "name": "analyze"
+        },
+        {
+          "kind": "function",
+          "line": 52,
+          "name": "cancel"
+        },
+        {
+          "kind": "function",
+          "line": 115,
+          "name": "Metric"
+        },
+        {
+          "kind": "function",
+          "line": 117,
+          "name": "FindingList"
+        },
+        {
+          "kind": "function",
+          "line": 122,
+          "name": "EvidencePanel"
+        },
+        {
+          "kind": "function",
+          "line": 124,
+          "name": "FileTable"
+        },
+        {
+          "kind": "function",
+          "line": 126,
+          "name": "FilePanel"
+        }
+      ]
+    },
+    {
+      "content_hash": "72c6ab2f368ca12b485cb4176850e3b0b3c589c31f7b474b63eb931830bf994c",
+      "language": "typescript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 1,
+        "fan_in": 1,
+        "fan_out": 1,
+        "symbol_count": 7
+      },
+      "path": "frontend/src/api.ts",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 5,
+          "name": "request"
+        },
+        {
+          "kind": "function",
+          "line": 19,
+          "name": "serverHealth"
+        },
+        {
+          "kind": "function",
+          "line": 23,
+          "name": "startAnalysis"
+        },
+        {
+          "kind": "function",
+          "line": 27,
+          "name": "analysisStatus"
+        },
+        {
+          "kind": "function",
+          "line": 31,
+          "name": "analysisResults"
+        },
+        {
+          "kind": "function",
+          "line": 39,
+          "name": "cancelAnalysis"
+        },
+        {
+          "kind": "function",
+          "line": 43,
+          "name": "explainFinding"
+        }
+      ]
+    },
+    {
+      "content_hash": "45bf826c00e24448ca6c4a668ce64c241cbc79f0458d0039a799bc023611a188",
+      "language": "typescript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 1,
+        "fan_in": 1,
+        "fan_out": 1,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/components/DependencyGraph.tsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 11,
+          "name": "DependencyGraph"
+        }
+      ]
+    },
+    {
+      "content_hash": "6e9e5807fcbd48b75a96db5cbef36c996262196be42e6d4760dc86babbe61ad2",
+      "language": "typescript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 2,
+        "fan_in": 0,
+        "fan_out": 1,
+        "symbol_count": 0
+      },
+      "path": "frontend/src/main.tsx",
+      "symbols": []
+    },
+    {
+      "content_hash": "d186a1e35e4b920ba4f260f839d024ee291fb9b506526894a1e51125d77bfc12",
+      "language": "typescript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 3,
+        "fan_out": 0,
+        "symbol_count": 0
+      },
+      "path": "frontend/src/types.ts",
+      "symbols": []
+    },
+    {
+      "content_hash": "b970412b4dfefed3e2db3275f56923fe8c38e711201f859848b142f086f53609",
+      "language": "typescript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 0
+      },
+      "path": "frontend/vite.config.ts",
+      "symbols": []
+    },
+    {
+      "content_hash": "683485ac9d48a176c587d9d90897e582c10115e88bdb6c449ad2ba4edf2bab95",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 2
+      },
+      "path": "tests/test_api.py",
+      "symbols": [
+        {
+          "kind": "class",
+          "line": 13,
+          "name": "ApiTests"
+        },
+        {
+          "kind": "function",
+          "line": 14,
+          "name": "test_versioned_job_api_and_root_confinement"
+        }
+      ]
+    },
+    {
+      "content_hash": "4811f24c1739f60f8b4776fc6c02db913b5f4ee2e95de1a95fdefab83ced8e43",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 3,
+        "fan_in": 0,
+        "fan_out": 1,
+        "symbol_count": 2
+      },
+      "path": "tests/test_cli.py",
+      "symbols": [
+        {
+          "kind": "class",
+          "line": 11,
+          "name": "CliTests"
+        },
+        {
+          "kind": "function",
+          "line": 12,
+          "name": "test_baseline_gate_fails_only_for_new_fingerprints"
+        }
+      ]
+    },
+    {
+      "content_hash": "37af1251f396509edf025174b06ca9b02e304ac713e36447b7070514841c8e3b",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 2,
+        "fan_in": 0,
+        "fan_out": 2,
+        "symbol_count": 8
+      },
+      "path": "tests/test_engine.py",
+      "symbols": [
+        {
+          "kind": "class",
+          "line": 11,
+          "name": "EngineTests"
+        },
+        {
+          "kind": "function",
+          "line": 12,
+          "name": "test_python_resolution_cycles_and_isolated_files"
+        },
+        {
+          "kind": "function",
+          "line": 30,
+          "name": "test_js_ts_tsx_and_tsconfig_aliases"
+        },
+        {
+          "kind": "function",
+          "line": 45,
+          "name": "test_ambiguous_import_never_creates_guessed_edges"
+        },
+        {
+          "kind": "function",
+          "line": 59,
+          "name": "test_nested_dependency_and_build_directories_are_pruned"
+        },
+        {
+          "kind": "function",
+          "line": 68,
+          "name": "test_tarjan_returns_every_cycle"
+        },
+        {
+          "kind": "function",
+          "line": 69,
+          "name": "edge"
+        },
+        {
+          "kind": "function",
+          "line": 78,
+          "name": "write"
+        }
+      ]
+    },
+    {
+      "content_hash": "1c44b93bd088de5fe60a53f1cf99c9fc102515c23185bc76f16b335aafb3ea23",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 2,
+        "fan_in": 0,
+        "fan_out": 3,
+        "symbol_count": 5
+      },
+      "path": "tests/test_governance_and_reports.py",
+      "symbols": [
+        {
+          "kind": "class",
+          "line": 13,
+          "name": "GovernanceAndReportTests"
+        },
+        {
+          "kind": "function",
+          "line": 14,
+          "name": "test_governance_suppression_and_explicit_metrics"
+        },
+        {
+          "kind": "function",
+          "line": 45,
+          "name": "test_dependency_allow_list_denies_unlisted_layer_edges"
+        },
+        {
+          "kind": "function",
+          "line": 71,
+          "name": "test_json_sarif_html_and_baseline_fingerprints"
+        },
+        {
+          "kind": "function",
+          "line": 85,
+          "name": "write"
+        }
+      ]
+    },
+    {
+      "content_hash": "d5059449112cef1bec6135e30d4b6b89a45ac89d09072295f033bffe01e172c0",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 1,
+        "fan_in": 0,
+        "fan_out": 1,
+        "symbol_count": 2
+      },
+      "path": "tests/test_storage.py",
+      "symbols": [
+        {
+          "kind": "class",
+          "line": 10,
+          "name": "StorageTests"
+        },
+        {
+          "kind": "function",
+          "line": 11,
+          "name": "test_job_lifecycle_and_source_is_not_required"
+        }
+      ]
+    }
+  ],
+  "findings": [],
+  "root": "/Users/kshitijmishra/Architect-CLI",
+  "schema_version": "1.0",
+  "summary": {
+    "cycles": 0,
+    "dependencies": 26,
+    "external": 107,
+    "files": 23,
+    "findings": 0,
+    "suppressed": 0,
+    "unresolved": 0
+  },
+  "unresolved_count": 0
+}
