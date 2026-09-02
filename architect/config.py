@@ -85,16 +85,19 @@ def _as_list(value: Any, default: list[str]) -> list[str]:
 
 
 def load_config(root: Path, config_path: Path | None = None) -> ArchitectConfig:
-    path = config_path or root / "architect.yaml"
+    path = config_path or root / "vinyas.yaml"
+    legacy_path = root / "architect.yaml"
+    if config_path is None and not path.exists() and legacy_path.exists():
+        path = legacy_path
     if not path.exists():
         return ArchitectConfig()
     try:
         import yaml
     except ImportError as exc:
-        raise RuntimeError("PyYAML is required when architect.yaml is present; install architect-pro") from exc
+        raise RuntimeError(f"PyYAML is required when {path.name} is present; install vinyas") from exc
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     if not isinstance(data, dict):
-        raise ValueError("architect.yaml must contain a mapping")
+        raise ValueError(f"{path.name} must contain a mapping")
 
     layers = []
     for item in data.get("layers", []):
