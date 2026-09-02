@@ -1,24 +1,26 @@
-version: "3.9"
-
 services:
   backend:
     build:
       context: .
       dockerfile: Dockerfile.backend
-    ports:
-      - "8000:8000"
+    expose: ["8000"]
     volumes:
-      - ./:/app
-      - /Users/kshitijmishra:/workspace
+      - ./:/workspace:ro
+      - architect-data:/data
     environment:
-      - PYTHONUNBUFFERED=1
-      - PYTHONPATH=/app
+      ARCHITECT_ROOT: /workspace
+      ARCHITECT_DATA_DIR: /data
+      ARCHITECT_MAX_JOBS: "2"
+    read_only: true
+    tmpfs: [/tmp]
+    security_opt: ["no-new-privileges:true"]
 
   frontend:
     build:
       context: .
       dockerfile: Dockerfile.frontend
-    ports:
-      - "5173:5173"
-    depends_on:
-      - backend
+    ports: ["5173:80"]
+    depends_on: [backend]
+
+volumes:
+  architect-data:
