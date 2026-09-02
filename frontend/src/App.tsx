@@ -65,14 +65,28 @@ function App() {
   const selectedFileNode = graph?.files.find((file) => file.path === selectedFile) || null
   const relatedEdges = graph?.edges.filter((edge) => edge.source === selectedFile || edge.target === selectedFile) || []
   const busy = job?.status === 'queued' || job?.status === 'running'
+  const tabCounts: Partial<Record<Tab, number>> = {
+    findings: graph?.summary.findings,
+    files: graph?.summary.files,
+  }
 
   return (
     <div className="app-shell">
       <header className="topbar">
-        <div><p className="eyebrow">ARCHITECT PRO</p><h1>Architecture governance</h1><p className="root-path">{root}</p></div>
-        <div className="actions">
-          {busy && <button className="button secondary" onClick={cancel}>Cancel</button>}
-          <button className="button primary" onClick={analyze} disabled={busy}>{busy ? 'Analyzing…' : graph ? 'Run again' : 'Analyze repository'}</button>
+        <div className="brand-lockup">
+          <div className="brand-mark" aria-hidden="true">A</div>
+          <div className="brand-copy">
+            <p className="eyebrow">ARCHITECT PRO</p>
+            <h1>Architecture governance</h1>
+            <p className="root-path" title={root}>{root}</p>
+          </div>
+        </div>
+        <div className="topbar-tools">
+          <span className="environment-badge">Local analysis</span>
+          <div className="actions">
+            {busy && <button className="button secondary" onClick={cancel}>Cancel</button>}
+            <button className="button primary" onClick={analyze} disabled={busy}>{busy ? 'Analyzing…' : graph ? 'Run again' : 'Analyze repository'}</button>
+          </div>
         </div>
       </header>
 
@@ -82,7 +96,12 @@ function App() {
 
       {graph ? <>
         <nav className="tabs" aria-label="Analysis views">
-          {(['overview', 'findings', 'files', 'graph'] as Tab[]).map((item) => <button key={item} className={tab === item ? 'active' : ''} onClick={() => setTab(item)}>{item}</button>)}
+          {(['overview', 'findings', 'files', 'graph'] as Tab[]).map((item) => (
+            <button key={item} className={tab === item ? 'active' : ''} onClick={() => setTab(item)}>
+              {item}
+              {tabCounts[item] !== undefined ? <span className="tab-count">{tabCounts[item]}</span> : null}
+            </button>
+          ))}
         </nav>
 
         {tab === 'overview' && <main>
