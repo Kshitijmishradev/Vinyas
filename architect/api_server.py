@@ -1,384 +1,135 @@
+from __future__ import annotations
+
 import os
-import uuid
-from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 from typing import Any
-import re
-import json
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response, status
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
-from architect.analysis_core import (
-    _find_path,
-    apply_focus,
-    build_hierarchical_graph,
-    build_indexes,
-    discover_files,
-    label_edges,
-    load_cache,
-    resolve_edges,
-    resolve_llm_budget,
-    resolve_workers,
-    save_cache,
-    scan_files,
-)
-from architect.brain import InferenceEngine
-from architect.scanner import UniversalScanner
+from architect.engine import AnalysisCancelled, analyze_repository
+from architect.explanations import explain_finding
+from architect.storage import AnalysisStore
+
+ALLOWED_ROOT = Path(os.environ.get("ARCHITECT_ROOT", os.getcwd())).expanduser().resolve()
+DATA_DIR = Path(os.environ.get("ARCHITECT_DATA_DIR", ALLOWED_ROOT / ".architect"))
+STORE = AnalysisStore(DATA_DIR / "analyses.sqlite3")
+EXECUTOR = ThreadPoolExecutor(max_workers=max(1, int(os.environ.get("ARCHITECT_MAX_JOBS", "2"))))
 
 
-class AnalyzeRequest(BaseModel):
-    path: str = Field(..., description="Absolute path of repository to analyze")
-    model: str = Field(default="qwen2.5-coder:7b")
-    focus: str | None = None
-    max_edges: int = 0
-    workers: int = 0
-    no_llm: bool = False
-    label_mode: str = Field(default="hybrid")
-    llm_max_edges: int | None = None
-    max_targets_per_dep: int = 8
-    cache_file: str = Field(default=".architect_cache.json")
-    no_cache: bool = False
+class CreateAnalysisRequest(BaseModel):
+    path: str | None = None
 
 
-class PathExplanationRequest(BaseModel):
-    analysis_id: str
-    source: str
-    target: str
+class ExplanationRequest(BaseModel):
+    finding_fingerprint: str
 
 
-app = FastAPI(title="Architect-CLI v4 API", version="4.0-prototype")
-
+app = FastAPI(title="Architect Pro API", version="1.0.0")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://127.0.0.1:5173",
-        "http://localhost:5173",
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "DELETE"],
+    allow_headers=["Content-Type"],
 )
 
-ANALYSIS_STORE: dict[str, dict[str, Any]] = {}
-ANALYSIS_STORE_FILE = ".architect_analysis_store.json"
 
-
-class RiskAnalysisRequest(BaseModel):
-    analysis_id: str
-    source: str | None = None
-    target: str | None = None
-
-
-class SearchRequest(BaseModel):
-    analysis_id: str
-    query: str
-
-
-def _persistable_store() -> dict[str, dict[str, Any]]:
-    snapshot: dict[str, dict[str, Any]] = {}
-    for key, value in ANALYSIS_STORE.items():
-        snapshot[key] = {
-            "edges": value.get("edges", []),
-            "file_cache": value.get("file_cache", {}),
-            "project_path": value.get("project_path", ""),
-            "created_at": value.get("created_at", ""),
-            "llm_model": value.get("llm_model", ""),
-            "llm_enabled": value.get("llm_enabled", False),
-        }
-    return snapshot
-
-
-def _save_analysis_store() -> None:
-    data = _persistable_store()
-    with open(ANALYSIS_STORE_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f)
-
-
-def _load_analysis_store() -> None:
-    if not os.path.exists(ANALYSIS_STORE_FILE):
-        return
+def _safe_root(requested: str | None) -> Path:
+    candidate = Path(requested).expanduser().resolve() if requested else ALLOWED_ROOT
     try:
-        with open(ANALYSIS_STORE_FILE, "r", encoding="utf-8") as f:
-            payload = json.load(f)
-    except (OSError, json.JSONDecodeError):
-        return
-
-    if not isinstance(payload, dict):
-        return
-
-    for key, value in payload.items():
-        if not isinstance(value, dict):
-            continue
-        ANALYSIS_STORE[key] = {
-            "edges": value.get("edges", []),
-            "file_cache": value.get("file_cache", {}),
-            "brain": None,
-            "created_at": value.get("created_at", ""),
-            "project_path": value.get("project_path", ""),
-            "llm_model": value.get("llm_model", ""),
-            "llm_enabled": value.get("llm_enabled", False),
-        }
+        candidate.relative_to(ALLOWED_ROOT)
+    except ValueError as exc:
+        raise HTTPException(status_code=403, detail="path is outside the server repository root") from exc
+    if not candidate.is_dir():
+        raise HTTPException(status_code=400, detail="repository path does not exist")
+    return candidate
 
 
-def _adjacency(edges: list[tuple[str, str, str]]) -> dict[str, set[str]]:
-    graph: dict[str, set[str]] = {}
-    for source, target, _ in edges:
-        graph.setdefault(source, set()).add(target)
-        graph.setdefault(target, set())
-    return graph
-
-
-def _detect_cycle(edges: list[tuple[str, str, str]]) -> list[str]:
-    graph = _adjacency(edges)
-    visited: set[str] = set()
-    stack: set[str] = set()
-    parent: dict[str, str] = {}
-
-    def dfs(node: str) -> list[str]:
-        visited.add(node)
-        stack.add(node)
-        for neighbor in graph.get(node, set()):
-            if neighbor not in visited:
-                parent[neighbor] = node
-                cycle = dfs(neighbor)
-                if cycle:
-                    return cycle
-            elif neighbor in stack:
-                cycle_path = [neighbor]
-                current = node
-                while current != neighbor and current in parent:
-                    cycle_path.append(current)
-                    current = parent[current]
-                cycle_path.append(neighbor)
-                cycle_path.reverse()
-                return cycle_path
-        stack.remove(node)
-        return []
-
-    for node in graph:
-        if node in visited:
-            continue
-        cycle = dfs(node)
-        if cycle:
-            return cycle
-    return []
-
-
-def _container_name(path: str, project_path: str) -> str:
+def _run_analysis(analysis_id: str, root: Path) -> None:
     try:
-        rel = os.path.relpath(path, project_path)
-    except ValueError:
-        return "root"
-    parts = rel.split(os.sep)
-    if len(parts) <= 1:
-        return "root"
-    return parts[0]
+        STORE.update(analysis_id, status="running", progress=1, message="Starting analysis")
+        graph = analyze_repository(
+            root,
+            progress=lambda value, message: STORE.update(analysis_id, progress=value, message=message),
+            cancelled=lambda: STORE.cancelled(analysis_id),
+        )
+        STORE.update(analysis_id, status="complete", progress=100, message="Analysis complete", result=graph.to_dict())
+    except AnalysisCancelled:
+        STORE.update(analysis_id, status="cancelled", message="Analysis cancelled")
+    except Exception as exc:  # worker boundary: expose structured failure, not a dead job
+        STORE.update(analysis_id, status="failed", error=str(exc), message="Analysis failed")
 
 
-def _risk_flags(payload: dict[str, Any], source: str | None, target: str | None) -> dict[str, Any]:
-    edges: list[tuple[str, str, str]] = payload.get("edges", [])
-    project_path = payload.get("project_path", "")
-
-    cycle = _detect_cycle(edges)
-    cross_container_edges = 0
-    per_source_cross: dict[str, int] = {}
-    for src, dst, _ in edges:
-        if _container_name(src, project_path) != _container_name(dst, project_path):
-            cross_container_edges += 1
-            per_source_cross[src] = per_source_cross.get(src, 0) + 1
-
-    leaky_sources = [
-        path for path, count in per_source_cross.items() if count >= 4
-    ]
-
-    scoped_path = []
-    scoped_labels = []
-    if source and target:
-        scoped_path, scoped_labels = _find_path(source, target, edges)
-
-    return {
-        "has_cycle": bool(cycle),
-        "cycle_path": cycle,
-        "cross_container_edge_count": cross_container_edges,
-        "potential_leaky_abstractions": leaky_sources,
-        "scoped_path": scoped_path,
-        "scoped_labels": scoped_labels,
-    }
-
-
-def _search_targets(payload: dict[str, Any], query: str) -> list[dict[str, Any]]:
-    hierarchy = build_hierarchical_graph(payload.get("edges", []), {})
-    q = query.strip().lower()
-    terms = [token for token in re.split(r"\W+", q) if token]
-
-    results: list[dict[str, Any]] = []
-    for container in hierarchy["system"]["children"]:
-        container_label = container["label"]
-        for file_node in container["children"]:
-            text = f"{container_label} {file_node['label']} {file_node['path']}".lower()
-            score = sum(2 for term in terms if term in text)
-            if q and q in text:
-                score += 3
-            for child in file_node.get("children", []):
-                child_text = f"{child.get('label', '')}".lower()
-                if q and q in child_text:
-                    score += 2
-                score += sum(1 for term in terms if term in child_text)
-            if score <= 0:
-                continue
-            results.append(
-                {
-                    "score": score,
-                    "container_id": container["id"],
-                    "container_label": container_label,
-                    "file_id": file_node["id"],
-                    "file_label": file_node["label"],
-                    "file_path": file_node["path"],
-                }
-            )
-
-    results.sort(key=lambda item: item["score"], reverse=True)
-    return results[:15]
-
-
-_load_analysis_store()
+def _analysis(analysis_id: str, result: bool = False) -> dict[str, Any]:
+    item = STORE.get(analysis_id, include_result=result)
+    if not item:
+        raise HTTPException(status_code=404, detail="analysis not found")
+    return item
 
 
 @app.get("/api/health")
-async def health() -> dict[str, str]:
-    return {"status": "ok", "service": "architect-api"}
+@app.get("/api/v1/health")
+def health() -> dict[str, Any]:
+    return {"status": "ok", "root": str(ALLOWED_ROOT), "version": "1.0.0"}
 
 
-@app.post("/api/analyze")
-async def analyze(req: AnalyzeRequest) -> dict[str, Any]:
-    project_path = os.path.abspath(req.path)
-    if not os.path.isdir(project_path):
-        raise HTTPException(status_code=400, detail=f"Invalid path: {project_path}")
+@app.post("/api/v1/analyses", status_code=status.HTTP_202_ACCEPTED)
+def create_analysis(request: CreateAnalysisRequest) -> dict[str, Any]:
+    root = _safe_root(request.path)
+    item = STORE.create(str(root))
+    EXECUTOR.submit(_run_analysis, item["id"], root)
+    return item
 
-    scanner = UniversalScanner()
-    workers = resolve_workers(req.workers)
-    effective_label_mode = "hints" if req.no_llm else req.label_mode
-    llm_needed = effective_label_mode != "hints"
-    brain = InferenceEngine(model=req.model) if llm_needed else None
 
-    use_cache = not req.no_cache and llm_needed
-    cache_file = os.path.abspath(req.cache_file)
-    cache_data = load_cache(cache_file) if use_cache else {}
+@app.get("/api/v1/analyses/{analysis_id}")
+def get_analysis(analysis_id: str) -> dict[str, Any]:
+    item = _analysis(analysis_id, result=True)
+    result = item.pop("result", None)
+    if result:
+        item["summary"] = result["summary"]
+    return item
 
-    all_paths = discover_files(project_path)
-    by_filename, by_stem = build_indexes(all_paths)
-    file_cache, raw_deps, symbol_index = scan_files(scanner, all_paths, workers)
 
-    edges, edge_hints = resolve_edges(
-        raw_deps,
-        by_filename,
-        by_stem,
-        max_targets_per_dep=req.max_targets_per_dep,
+@app.get("/api/v1/analyses/{analysis_id}/findings")
+def get_findings(analysis_id: str) -> dict[str, Any]:
+    item = _analysis(analysis_id, result=True)
+    if item["status"] != "complete":
+        raise HTTPException(status_code=409, detail="analysis is not complete")
+    return {"analysis_id": analysis_id, "findings": item["result"]["findings"]}
+
+
+@app.get("/api/v1/analyses/{analysis_id}/graph")
+def get_graph(analysis_id: str) -> dict[str, Any]:
+    item = _analysis(analysis_id, result=True)
+    if item["status"] != "complete":
+        raise HTTPException(status_code=409, detail="analysis is not complete")
+    result = item["result"]
+    return {key: result[key] for key in ("schema_version", "root", "files", "edges", "cycles", "summary")} | {"analysis_id": analysis_id}
+
+
+@app.post("/api/v1/analyses/{analysis_id}/explanations")
+def create_explanation(analysis_id: str, request: ExplanationRequest) -> dict[str, Any]:
+    item = _analysis(analysis_id, result=True)
+    if item["status"] != "complete":
+        raise HTTPException(status_code=409, detail="analysis is not complete")
+    finding = next(
+        (value for value in item["result"]["findings"] if value["fingerprint"] == request.finding_fingerprint),
+        None,
     )
-    edges, edge_hints = apply_focus(edges, edge_hints, req.focus)
-
-    if req.max_edges > 0:
-        edges = edges[: req.max_edges]
-
-    llm_budget = resolve_llm_budget(effective_label_mode, req.llm_max_edges, len(edges))
-    final_edges = label_edges(
-        edges,
-        edge_hints,
-        file_cache,
-        brain,
-        req.no_llm,
-        workers,
-        use_cache,
-        cache_data,
-        label_mode=effective_label_mode,
-        llm_max_edges=llm_budget,
-    )
-
-    if use_cache:
-        save_cache(cache_file, cache_data)
-
-    hierarchy = build_hierarchical_graph(final_edges, symbol_index)
-    analysis_id = str(uuid.uuid4())
-    ANALYSIS_STORE[analysis_id] = {
-        "edges": final_edges,
-        "file_cache": file_cache,
-        "brain": brain,
-        "created_at": datetime.utcnow().isoformat() + "Z",
-        "project_path": project_path,
-        "llm_model": req.model,
-        "llm_enabled": llm_needed,
-    }
-    _save_analysis_store()
-
-    return {
-        "analysis_id": analysis_id,
-        "project_path": project_path,
-        "edge_count": len(final_edges),
-        "file_count": len(file_cache),
-        "mode": effective_label_mode,
-        "hierarchy": hierarchy,
-    }
+    if not finding:
+        raise HTTPException(status_code=404, detail="finding not found")
+    explanation, generated = explain_finding(finding)
+    return {"explanation": explanation, "ai_generated": generated, "facts_source": "deterministic-analysis"}
 
 
-@app.post("/api/path-explanation")
-async def path_explanation(req: PathExplanationRequest) -> dict[str, Any]:
-    payload = ANALYSIS_STORE.get(req.analysis_id)
-    if not payload:
-        raise HTTPException(status_code=404, detail="Unknown analysis_id")
-
-    edges = payload["edges"]
-    file_cache = payload["file_cache"]
-    brain = payload.get("brain")
-
-    if not brain and payload.get("llm_enabled"):
-        model = payload.get("llm_model") or "qwen2.5-coder:7b"
-        brain = InferenceEngine(model=model)
-        payload["brain"] = brain
-
-    path_nodes, path_labels = _find_path(req.source, req.target, edges)
-    if not path_nodes:
-        raise HTTPException(status_code=404, detail="No dependency path found")
-
-    if brain:
-        explanation = brain.get_path_explanation(path_nodes, path_labels, file_cache)
+@app.delete("/api/v1/analyses/{analysis_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_analysis(analysis_id: str) -> Response:
+    item = _analysis(analysis_id)
+    if item["status"] in {"queued", "running"}:
+        STORE.cancel(analysis_id)
     else:
-        explanation = " -> ".join(path_labels) if path_labels else "direct dependency"
-
-    return {
-        "source": req.source,
-        "target": req.target,
-        "path": path_nodes,
-        "labels": path_labels,
-        "explanation": explanation,
-    }
-
-
-@app.post("/api/risk-analysis")
-async def risk_analysis(req: RiskAnalysisRequest) -> dict[str, Any]:
-    payload = ANALYSIS_STORE.get(req.analysis_id)
-    if not payload:
-        raise HTTPException(status_code=404, detail="Unknown analysis_id")
-
-    risks = _risk_flags(payload, req.source, req.target)
-    return {
-        "analysis_id": req.analysis_id,
-        "project_path": payload.get("project_path"),
-        "risks": risks,
-    }
-
-
-@app.post("/api/search")
-async def search(req: SearchRequest) -> dict[str, Any]:
-    payload = ANALYSIS_STORE.get(req.analysis_id)
-    if not payload:
-        raise HTTPException(status_code=404, detail="Unknown analysis_id")
-    if not req.query.strip():
-        raise HTTPException(status_code=400, detail="query is required")
-
-    results = _search_targets(payload, req.query)
-    return {
-        "analysis_id": req.analysis_id,
-        "query": req.query,
-        "matches": results,
-    }
+        STORE.delete(analysis_id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
