@@ -1,0 +1,8 @@
+Vinyas 1.1.0
+
+- Added bounded, anonymous analysis of public GitHub repositories.
+- Added strict repository URL and archive validation with download, file, source, and timeout limits.
+- Added source metadata, structured job failures, cancellation cleanup, and best-effort result expiry.
+- Added atomic per-client rate limits and global job capacity controls.
+- Added the public repository URL workflow and temporary analysis links to the web explorer.
+- Added backend archive/API tests and frontend interaction tests.

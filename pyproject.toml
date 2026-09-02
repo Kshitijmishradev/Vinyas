@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "vinyas"
-version = "1.0.0"
+version = "1.1.0"
 description = "Deterministic local architecture analysis and CI governance for Python and TypeScript repositories"
 readme = "README.md"
 requires-python = ">=3.10"

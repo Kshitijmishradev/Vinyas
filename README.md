@@ -14,6 +14,7 @@ Vinyas builds an evidence-backed dependency graph, finds architecture violations
 - Produces JSON, standalone HTML, and SARIF reports.
 - Compares against a Git ref or saved report and fails only for newly introduced findings.
 - Provides a repository-restricted local explorer with progress, cancellation, tables, graph navigation, evidence, and optional Ollama explanations.
+- Accepts bounded public GitHub repository snapshots in the hosted explorer without executing repository code or retaining the downloaded source.
 
 ## Five-minute start
 
@@ -51,6 +52,8 @@ The Docker stack is available at `http://127.0.0.1:5173`. It mounts only the cur
 The repository includes a `render.yaml` Blueprint for a free Docker web service. Render binds the API to its assigned `PORT`, checks `/api/v1/health`, limits the free instance to one analysis worker, and stores temporary SQLite state under `/tmp/vinyas`.
 
 The free service filesystem is ephemeral, so completed analysis jobs disappear when Render restarts or spins down the instance. Add the deployed frontend origin to `VINYAS_CORS_ORIGINS` as a comma-separated URL when using a custom frontend domain.
+
+The deployed analyzer at `https://vinyas-web.pages.dev/app` accepts a public GitHub repository root URL and analyzes its current default branch. Public scans are limited to three accepted jobs per client per hour, one active job per client, and two active jobs globally. Results remain available for up to one hour on a best-effort basis.
 
 To analyze another repository without editing Compose, set `VINYAS_REPO` to its absolute path:
 
@@ -111,7 +114,7 @@ Expired suppressions stop applying automatically. Every suppression requires a r
 
 ## API v1
 
-- `POST /api/v1/analyses` — queue a scan within the configured repository root.
+- `POST /api/v1/analyses` — queue a local scan or a public GitHub scan with `{"repository_url":"https://github.com/owner/repository"}`.
 - `GET /api/v1/analyses/{id}` — read status, progress, and summary.
 - `GET /api/v1/analyses/{id}/findings` — read deterministic findings and evidence.
 - `GET /api/v1/analyses/{id}/graph` — read files, edges, metrics, and cycles.
@@ -119,6 +122,8 @@ Expired suppressions stop applying automatically. Every suppression requires a r
 - `DELETE /api/v1/analyses/{id}` — cancel a running scan or delete a completed result.
 
 Analyses are stored in `.vinyas/analyses.sqlite3`. Full source files are not persisted; results contain paths, hashes, metrics, dependency evidence excerpts, and findings.
+
+Remote scanning is disabled by default. Set `VINYAS_REMOTE_ENABLED=true` only for a deliberately public service. The default limits are a 50 MB download, 10,000 archive entries, 750 supported source files, 25 MB of retained analysis input, 1 MB per retained file, and 90 seconds per job.
 
 ## Optional local AI
 
@@ -154,6 +159,7 @@ mypy architect
 cd frontend
 npm ci
 npm run lint
+npm test
 npm run build
 ```
 
@@ -163,6 +169,7 @@ The correctness suite covers relative Python imports, TSX and aliases, isolated 
 
 - Run the API on loopback unless you add authentication and a trusted reverse proxy.
 - The server is restricted to `VINYAS_ROOT`; Docker mounts only that repository.
+- Remote mode accepts only HTTPS GitHub repository-root URLs. It rejects unsafe redirects and archive entries, never installs dependencies or initializes submodules, and deletes temporary source after every outcome.
 - Import analysis is static. Dynamic Python imports, runtime module loaders, framework-generated dependencies, and arbitrary bundler plugins may require future adapters.
 - Java, Go, Rust, and C/C++ are not part of the reliable v1 analyzer. New languages should implement the analyzer/resolver boundary without weakening resolution confidence.
 - AI output is advisory and never used for severity, rule evaluation, baselines, or exit codes.

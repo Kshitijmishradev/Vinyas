@@ -45,6 +45,22 @@ export type Edge = {
   confidence: string
 }
 
+export type LocalSource = {
+  kind: 'local'
+  path: string
+}
+
+export type GitHubSource = {
+  kind: 'github'
+  repository_url: string
+  owner: string
+  repository: string
+  ref: 'HEAD'
+  commit_sha: string | null
+}
+
+export type AnalysisSource = LocalSource | GitHubSource
+
 export type Graph = {
   analysis_id: string
   root: string
@@ -52,6 +68,7 @@ export type Graph = {
   edges: Edge[]
   cycles: string[][]
   summary: Summary
+  source?: AnalysisSource
 }
 
 export type Job = {
@@ -61,5 +78,18 @@ export type Job = {
   progress: number
   message: string
   error?: string
+  error_code?: string | null
+  expires_at?: string | null
+  source?: AnalysisSource
   summary?: Summary
+}
+
+export type Health = {
+  status: string
+  root: string
+  version: string
+  capabilities: {
+    local: boolean
+    github_public: boolean
+  }
 }

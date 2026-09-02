@@ -14,6 +14,14 @@ services:
         value: /tmp/vinyas
       - key: VINYAS_MAX_JOBS
         value: "1"
+      - key: VINYAS_MAX_ACTIVE
+        value: "2"
+      - key: VINYAS_RATE_LIMIT_PER_HOUR
+        value: "3"
+      - key: VINYAS_REMOTE_ENABLED
+        value: "true"
+      - key: VINYAS_TRUST_PROXY
+        value: "true"
       - key: VINYAS_CORS_ORIGINS
         value: http://127.0.0.1:5173,http://localhost:5173,https://vinyas.pages.dev,https://vinyas-web.pages.dev
       - key: VINYAS_OLLAMA_ENABLED

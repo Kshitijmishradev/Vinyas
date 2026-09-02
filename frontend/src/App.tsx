@@ -1,14 +1,15 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
-import { analysisResults, analysisStatus, cancelAnalysis, explainFinding, serverHealth, startAnalysis } from './api'
+import { ApiError, analysisResults, analysisStatus, cancelAnalysis, explainFinding, normalizeGitHubRepositoryUrl, serverHealth, startAnalysis, startLocalAnalysis } from './api'
 import { DependencyGraph } from './components/DependencyGraph'
-import type { FileNode, Finding, Graph, Job } from './types'
+import type { FileNode, Finding, Graph, Health, Job } from './types'
 import { LandingPage } from './LandingPage'
 
 type Tab = 'overview' | 'findings' | 'files' | 'graph'
 
 function AnalyzerApp() {
-  const [root, setRoot] = useState('Connecting…')
+  const [health, setHealth] = useState<Health | null>(null)
+  const [repositoryUrl, setRepositoryUrl] = useState('')
   const [job, setJob] = useState<Job | null>(null)
   const [graph, setGraph] = useState<Graph | null>(null)
   const [findings, setFindings] = useState<Finding[]>([])
@@ -18,12 +19,42 @@ function AnalyzerApp() {
   const [selectedFinding, setSelectedFinding] = useState<Finding | null>(null)
   const [selectedFile, setSelectedFile] = useState<string | null>(null)
   const [error, setError] = useState('')
+  const [formError, setFormError] = useState('')
+  const [unavailable, setUnavailable] = useState(false)
+  const [cancelRequested, setCancelRequested] = useState(false)
   const [explanation, setExplanation] = useState<{ text: string; ai: boolean } | null>(null)
+  const repositoryInput = useRef<HTMLInputElement>(null)
   const jobId = job?.id
   const jobStatus = job?.status
 
   useEffect(() => {
-    serverHealth().then((health) => setRoot(health.root)).catch(() => setError('Cannot connect to the Vinyas API.'))
+    serverHealth().then(setHealth).catch(() => setError('Cannot connect to the Vinyas API.'))
+  }, [])
+
+  useEffect(() => {
+    const analysisId = new URLSearchParams(window.location.search).get('analysis')
+    if (!analysisId) return
+    let active = true
+    async function restore() {
+      try {
+        const current = await analysisStatus(analysisId as string)
+        if (!active) return
+        setJob(current)
+        if (current.source?.kind === 'github') setRepositoryUrl(current.source.repository_url)
+        if (current.status === 'complete') {
+          const result = await analysisResults(current.id)
+          if (!active) return
+          setGraph(result.graph)
+          setFindings(result.findings)
+        }
+      } catch (cause) {
+        if (!active) return
+        if (cause instanceof ApiError && [404, 410].includes(cause.status)) setUnavailable(true)
+        else setError(errorMessage(cause, 'Could not restore this analysis.'))
+      }
+    }
+    void restore()
+    return () => { active = false }
   }, [])
 
   useEffect(() => {
@@ -32,6 +63,7 @@ function AnalyzerApp() {
       try {
         const current = await analysisStatus(jobId)
         setJob(current)
+        if (current.source?.kind === 'github') setRepositoryUrl(current.source.repository_url)
         if (current.status === 'complete') {
           const result = await analysisResults(current.id)
           setGraph(result.graph)
@@ -39,21 +71,57 @@ function AnalyzerApp() {
           setTab('overview')
         }
       } catch (cause) {
-        setError(cause instanceof Error ? cause.message : 'Analysis status failed')
+        setError(errorMessage(cause, 'Analysis status failed'))
       }
     }, 700)
     return () => window.clearInterval(timer)
   }, [jobId, jobStatus])
 
-  async function analyze() {
-    setError(''); setGraph(null); setFindings([]); setSelectedFinding(null); setSelectedFile(null)
-    try { setJob(await startAnalysis()) } catch (cause) { setError(cause instanceof Error ? cause.message : 'Analysis failed') }
+  async function analyze(event?: React.FormEvent) {
+    event?.preventDefault()
+    let canonical: string
+    try {
+      canonical = normalizeGitHubRepositoryUrl(repositoryUrl)
+    } catch (cause) {
+      setFormError(errorMessage(cause, 'Enter a valid GitHub repository URL.'))
+      repositoryInput.current?.focus()
+      return
+    }
+    setError(''); setFormError(''); setUnavailable(false); setCancelRequested(false)
+    setGraph(null); setFindings([]); setSelectedFinding(null); setSelectedFile(null); setExplanation(null)
+    try {
+      const created = await startAnalysis(canonical)
+      setJob(created)
+      setRepositoryUrl(canonical)
+      window.history.replaceState(null, '', `/app?analysis=${created.id}`)
+    } catch (cause) {
+      setError(errorMessage(cause, 'Analysis failed'))
+    }
   }
 
   async function cancel() {
     if (!job) return
     await cancelAnalysis(job.id)
-    setJob({ ...job, status: 'cancelled', message: 'Cancellation requested' })
+    setCancelRequested(true)
+    setJob({ ...job, message: 'Cancellation requested' })
+  }
+
+  async function analyzeLocal() {
+    setError(''); setGraph(null); setFindings([]); setSelectedFinding(null); setSelectedFile(null)
+    try {
+      const created = await startLocalAnalysis()
+      setJob(created)
+      window.history.replaceState(null, '', `/app?analysis=${created.id}`)
+    } catch (cause) {
+      setError(errorMessage(cause, 'Analysis failed'))
+    }
+  }
+
+  function reset() {
+    setJob(null); setGraph(null); setFindings([]); setSelectedFinding(null); setSelectedFile(null)
+    setExplanation(null); setError(''); setFormError(''); setUnavailable(false); setCancelRequested(false)
+    window.history.replaceState(null, '', '/app')
+    window.setTimeout(() => repositoryInput.current?.focus(), 0)
   }
 
   const filteredFindings = useMemo(() => findings.filter((finding) => {
@@ -66,6 +134,11 @@ function AnalyzerApp() {
   const selectedFileNode = graph?.files.find((file) => file.path === selectedFile) || null
   const relatedEdges = graph?.edges.filter((edge) => edge.source === selectedFile || edge.target === selectedFile) || []
   const busy = job?.status === 'queued' || job?.status === 'running'
+  const githubSource = job?.source?.kind === 'github' ? job.source : graph?.source?.kind === 'github' ? graph.source : null
+  const sourceLabel = githubSource
+    ? `${githubSource.owner}/${githubSource.repository}${githubSource.commit_sha ? ` · ${githubSource.commit_sha.slice(0, 8)}` : ''}`
+    : health?.capabilities.github_public ? 'Submit a public GitHub repository' : health?.root || 'Connecting…'
+  const publicMode = Boolean(githubSource || health?.capabilities.github_public)
   const tabCounts: Partial<Record<Tab, number>> = {
     findings: graph?.summary.findings,
     files: graph?.summary.files,
@@ -79,20 +152,22 @@ function AnalyzerApp() {
           <div className="brand-copy">
             <p className="eyebrow">VINYAS</p>
             <h1>Architecture governance</h1>
-            <p className="root-path" title={root}>{root}</p>
+            <p className="root-path" title={sourceLabel}>{sourceLabel}</p>
           </div>
         </div>
         <div className="topbar-tools">
-          <span className="environment-badge">Local analysis</span>
+          <span className="environment-badge">{publicMode ? 'Public GitHub analysis' : 'Local analysis'}</span>
           <div className="actions">
-            {busy && <button className="button secondary" onClick={cancel}>Cancel</button>}
-            <button className="button primary" onClick={analyze} disabled={busy}>{busy ? 'Analyzing…' : graph ? 'Run again' : 'Analyze repository'}</button>
+            {busy && <button className="button secondary" onClick={cancel} disabled={cancelRequested}>{cancelRequested ? 'Cancelling…' : 'Cancel'}</button>}
+            {graph && <button className="button secondary" onClick={reset}>Analyze another</button>}
+            {graph && <button className="button primary" onClick={() => githubSource ? void analyze() : void analyzeLocal()} disabled={busy}>Run again</button>}
           </div>
         </div>
       </header>
 
       {busy && <section className="progress-card" aria-live="polite"><div><strong>{job?.message}</strong><span>{job?.progress || 0}%</span></div><progress max="100" value={job?.progress || 0} /></section>}
-      {job?.status === 'failed' && <div className="banner error">{job.error || 'Analysis failed'}</div>}
+      {job?.status === 'failed' && <div className="banner error"><strong>{job.error_code ? formatErrorCode(job.error_code) : 'Analysis failed'}</strong><span>{job.error || 'Analysis failed'}</span></div>}
+      {job?.status === 'cancelled' && <div className="banner">Analysis cancelled. You can submit another repository.</div>}
       {error && <div className="banner error">{error}</div>}
 
       {graph ? <>
@@ -127,10 +202,34 @@ function AnalyzerApp() {
         {tab === 'findings' && <main className="workspace"><section className="panel grow"><div className="toolbar"><input aria-label="Filter findings" placeholder="Filter path, message, or evidence" value={query} onChange={(event) => setQuery(event.target.value)} /><select aria-label="Filter by rule" value={rule} onChange={(event) => setRule(event.target.value)}><option value="all">All rules</option>{rules.map((item) => <option key={item}>{item}</option>)}</select></div><FindingList findings={filteredFindings} onSelect={(item) => { setSelectedFinding(item); setExplanation(null) }} selected={selectedFinding?.fingerprint} /></section><EvidencePanel finding={selectedFinding} explanation={explanation} onExplain={async () => { if (!selectedFinding || !job) return; const result = await explainFinding(job.id, selectedFinding.fingerprint); setExplanation({ text: result.explanation, ai: result.ai_generated }) }} /></main>}
         {tab === 'files' && <main className="workspace"><section className="panel grow"><FileTable files={files} onSelect={setSelectedFile} selected={selectedFile} /></section><FilePanel file={selectedFileNode} edges={relatedEdges} /></main>}
         {tab === 'graph' && <main className="workspace"><section className="panel grow"><DependencyGraph files={files} edges={graph.edges} selected={selectedFile} onSelect={setSelectedFile} /></section><FilePanel file={selectedFileNode} edges={relatedEdges} /></main>}
-      </> : !busy && <main className="welcome"><div className="welcome-icon">V</div><h2>Trust the graph before acting on it.</h2><p>Run a deterministic scan to inspect dependencies, cycles, unresolved imports, governance violations, and evidence-backed metrics.</p><button className="button primary" onClick={analyze}>Analyze repository</button></main>}
+      </> : !busy && <main className="welcome">
+        <div className="welcome-icon">V</div>
+        <p className="eyebrow">PUBLIC REPOSITORY ANALYSIS</p>
+        <h2>{unavailable ? 'This analysis is no longer available.' : 'Trust the graph before acting on it.'}</h2>
+        <p>{unavailable ? 'Temporary results can expire or be cleared when the free analysis service restarts.' : 'Enter a public GitHub repository URL to inspect dependencies, cycles, unresolved imports, governance violations, and evidence-backed metrics.'}</p>
+        {unavailable && <button className="button secondary expired-action" onClick={reset}>Analyze another repository</button>}
+        {!unavailable && health?.capabilities.github_public && <RepositoryForm
+          value={repositoryUrl}
+          error={formError}
+          disabled={false}
+          inputRef={repositoryInput}
+          onChange={(value) => { setRepositoryUrl(value); setFormError('') }}
+          onSubmit={analyze}
+        />}
+        {!unavailable && health?.capabilities.github_public && <p className="repository-note">Public GitHub repositories only · Default branch · Source removed after analysis</p>}
+        {!unavailable && health && !health.capabilities.github_public && <button className="button primary" onClick={() => void analyzeLocal()}>Analyze local repository</button>}
+      </main>}
     </div>
   )
 }
+
+function RepositoryForm({ value, error, disabled, inputRef, onChange, onSubmit }: { value: string; error: string; disabled: boolean; inputRef: React.RefObject<HTMLInputElement | null>; onChange: (value: string) => void; onSubmit: (event: React.FormEvent) => void }) {
+  return <form className="repository-form" onSubmit={onSubmit} noValidate><label htmlFor="repository-url">GitHub repository URL</label><div className="repository-input-row"><input ref={inputRef} id="repository-url" type="url" inputMode="url" autoComplete="url" spellCheck={false} placeholder="https://github.com/owner/repository" value={value} onChange={(event) => onChange(event.target.value)} aria-describedby={error ? 'repository-error repository-help' : 'repository-help'} aria-invalid={Boolean(error)} disabled={disabled} /><button className="button primary" type="submit" disabled={disabled}>Analyze repository</button></div>{error && <p className="field-error" id="repository-error" role="alert">{error}</p>}<span className="sr-only" id="repository-help">Enter the root URL of a public GitHub repository.</span></form>
+}
+
+function errorMessage(cause: unknown, fallback: string) { return cause instanceof Error ? cause.message : fallback }
+
+function formatErrorCode(value: string) { return value.split('_').map((part) => part[0].toUpperCase() + part.slice(1)).join(' ') }
 
 function Metric({ label, value, tone = '' }: { label: string; value: number; tone?: string }) { return <article className={`metric ${tone}`}><span>{label}</span><strong>{value}</strong></article> }
 
