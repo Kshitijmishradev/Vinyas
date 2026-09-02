@@ -154,7 +154,7 @@
 .art-axis.horizontal::after { top: -4px; left: 0; }.art-axis.vertical::after { right: -4px; bottom: 0; }
 .art-note { position: absolute; z-index: 3; color: rgba(238,231,220,.42); font-family: var(--font-mono); font-size: 8px; letter-spacing: .16em; writing-mode: vertical-rl; }
 .art-note.note-one { top: 19%; right: 6.3vw; }.art-note.note-two { right: 31.7%; bottom: 12%; }
-.analysis-overlay .landing-canvas { z-index: 2; opacity: calc(.07 + var(--story-progress) * .18); mix-blend-mode: screen; mask-image: linear-gradient(to left, black, transparent 63%); transform: translateX(8vw) scale(1.03); }
+.analysis-overlay .landing-canvas { z-index: 2; opacity: calc(.2 + var(--story-progress) * .34); mix-blend-mode: screen; mask-image: linear-gradient(to left, black, transparent 63%); transform: translateX(8vw) scale(1.03); }
 .analysis-overlay .landing-canvas::after { display: none; }
 
 .landing-nav { min-height: 68px; border-bottom-color: rgba(238,231,220,.13); background: rgba(9,10,8,.68); }
