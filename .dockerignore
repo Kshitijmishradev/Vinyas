@@ -1,6 +1,7 @@
 .git
 .github
 .architect
+.vinyas
 .venv
 venv
 **/__pycache__
@@ -13,3 +14,4 @@ img
 *.pyc
 *.sarif
 architect-report.html
+vinyas-report.html
