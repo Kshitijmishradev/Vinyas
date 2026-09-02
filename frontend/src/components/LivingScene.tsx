@@ -1,6 +1,8 @@
 import { Canvas, useThree } from '@react-three/fiber'
 import { Edges, Line } from '@react-three/drei'
-import { Suspense, useEffect } from 'react'
+import { Bloom, EffectComposer, GodRays, ToneMapping } from '@react-three/postprocessing'
+import { Suspense, useEffect, useRef } from 'react'
+import { ToneMappingMode } from 'postprocessing'
 import * as THREE from 'three'
 
 const MODULES = [
@@ -15,11 +17,13 @@ const CONNECTIONS = [[0, 4], [1, 4], [1, 5], [2, 5], [2, 6], [3, 6], [4, 7], [5,
 
 function ArchitectureScene({ progress, reduced }: { progress: number; reduced: boolean }) {
   const { invalidate } = useThree()
+  const beacon = useRef<THREE.Mesh>(null!)
   const stage = Math.min(5, progress * 5.55)
   const reveal = THREE.MathUtils.smoothstep(stage, 0.55, 1.75)
   const fault = THREE.MathUtils.smoothstep(stage, 2.5, 3.25)
   const boundary = THREE.MathUtils.smoothstep(stage, 3.45, 4.25)
   const certified = THREE.MathUtils.smoothstep(stage, 4.35, 5)
+  const beaconStrength = 0.68 + reveal * 0.22 + fault * 0.12 + certified * 0.2
 
   useEffect(() => invalidate(), [progress, invalidate])
   return (
@@ -27,6 +31,15 @@ function ArchitectureScene({ progress, reduced }: { progress: number; reduced: b
       <ambientLight intensity={1.3} />
       <directionalLight position={[4, 7, 5]} intensity={2.1} color="#efe4cf" />
       <directionalLight position={[-5, -1, 2]} intensity={0.65} color="#315cff" />
+      <pointLight position={[2.9, 2.2, -2.7]} intensity={beaconStrength * 9} distance={17} decay={2} color="#f2a516" />
+      <mesh ref={beacon} position={[2.9, 2.2, -2.7]} scale={0.78 + certified * 0.18}>
+        <circleGeometry args={[1, 64]} />
+        <meshBasicMaterial color="#ffe7b0" transparent opacity={beaconStrength} depthWrite={false} toneMapped={false} />
+      </mesh>
+      <mesh position={[2.9, 2.2, -2.76]} scale={1.38 + reveal * 0.18}>
+        <ringGeometry args={[0.98, 1, 64]} />
+        <meshBasicMaterial color="#f2a516" transparent opacity={0.2 + certified * 0.18} depthWrite={false} toneMapped={false} side={THREE.DoubleSide} />
+      </mesh>
       <group position={[0, -2.1, 0]}>
         {[5.9, 5.35, 4.8].map((width, index) => <mesh key={width} position={[0, index * 0.18, 0]}><boxGeometry args={[width, 0.15, 2.7 - index * 0.18]} /><meshStandardMaterial color="#413b33" roughness={0.86} metalness={0.05} /><Edges color="#ada59a" opacity={0.55} transparent /></mesh>)}
       </group>
@@ -52,6 +65,21 @@ function ArchitectureScene({ progress, reduced }: { progress: number; reduced: b
         {[-1.15, 0.72].map((y, index) => <mesh key={y} position={[0, y, -0.72]}><boxGeometry args={[7.4, 0.025, 3.9]} /><meshBasicMaterial color={index ? '#315cff' : '#29413c'} transparent opacity={boundary * 0.14} depthWrite={false} /></mesh>)}
       </group>
       <mesh position={[0, 0.45, 2.15]} visible={certified > 0.02} rotation={[0, 0, -0.08]} scale={0.8 + certified * 0.25}><ringGeometry args={[1.22, 1.34, 64]} /><meshBasicMaterial color="#c7f43d" transparent opacity={certified * 0.9} side={THREE.DoubleSide} /></mesh>
+      {!reduced && <EffectComposer autoClear={false} multisampling={0}>
+        <GodRays
+          sun={beacon}
+          samples={40}
+          density={0.96}
+          decay={0.95}
+          weight={0.48 + certified * 0.08}
+          exposure={0.5 + beaconStrength * 0.15}
+          clampMax={1}
+          blur
+          resolutionScale={0.5}
+        />
+        <Bloom luminanceThreshold={0.62} luminanceSmoothing={0.8} intensity={0.55} mipmapBlur />
+        <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
+      </EffectComposer>}
     </group>
   )
 }
