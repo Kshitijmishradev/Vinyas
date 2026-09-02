@@ -17,8 +17,8 @@ class ApiTests(unittest.TestCase):
             data = Path(directory) / "data"
             root.mkdir()
             (root / "app.py").write_text("VALUE = 1\n", encoding="utf-8")
-            os.environ["ARCHITECT_ROOT"] = str(root)
-            os.environ["ARCHITECT_DATA_DIR"] = str(data)
+            os.environ["VINYAS_ROOT"] = str(root)
+            os.environ["VINYAS_DATA_DIR"] = str(data)
             module = importlib.import_module("architect.api_server")
             client = TestClient(module.app)
 
