@@ -3,217 +3,587 @@
   "edges": [
     {
       "confidence": "exact",
-      "evidence": "from architect.models import Symbol",
-      "line": 11,
+      "evidence": "from .config import get_settings",
+      "line": 33,
       "resolution": "python-module",
-      "source": "architect/analyzers.py",
-      "target": "architect/models.py"
+      "source": "backend/src/cache.py",
+      "target": "backend/src/config.py"
     },
     {
       "confidence": "exact",
-      "evidence": "from architect.engine import AnalysisCancelled, analyze_repository",
-      "line": 12,
+      "evidence": "from .stream import bus",
+      "line": 17,
       "resolution": "python-module",
-      "source": "architect/api_server.py",
-      "target": "architect/engine.py"
+      "source": "backend/src/live.py",
+      "target": "backend/src/stream/__init__.py"
     },
     {
       "confidence": "exact",
-      "evidence": "from architect.explanations import explain_finding",
+      "evidence": "from . import cache",
       "line": 13,
       "resolution": "python-module",
-      "source": "architect/api_server.py",
-      "target": "architect/explanations.py"
+      "source": "backend/src/main.py",
+      "target": "backend/src/cache.py"
     },
     {
       "confidence": "exact",
-      "evidence": "from architect.storage import AnalysisStore",
+      "evidence": "from .cache import ComputationInProgress, cached, make_key, ttl_for_event",
       "line": 14,
       "resolution": "python-module",
-      "source": "architect/api_server.py",
-      "target": "architect/storage.py"
+      "source": "backend/src/main.py",
+      "target": "backend/src/cache.py"
     },
     {
       "confidence": "exact",
-      "evidence": "from architect.engine import analyze_repository",
-      "line": 10,
+      "evidence": "from .config import get_settings",
+      "line": 15,
       "resolution": "python-module",
-      "source": "architect/baseline.py",
-      "target": "architect/engine.py"
+      "source": "backend/src/main.py",
+      "target": "backend/src/config.py"
     },
     {
       "confidence": "exact",
-      "evidence": "from architect.models import AnalysisGraph",
-      "line": 11,
+      "evidence": "from .live import hub",
+      "line": 16,
       "resolution": "python-module",
-      "source": "architect/baseline.py",
-      "target": "architect/models.py"
+      "source": "backend/src/main.py",
+      "target": "backend/src/live.py"
     },
     {
       "confidence": "exact",
-      "evidence": "from architect.baseline import active_fingerprints, load_baseline",
-      "line": 9,
+      "evidence": "from .processor import F1DataProcessor",
+      "line": 17,
       "resolution": "python-module",
-      "source": "architect/cli.py",
-      "target": "architect/baseline.py"
+      "source": "backend/src/main.py",
+      "target": "backend/src/processor.py"
     },
     {
       "confidence": "exact",
-      "evidence": "from architect.engine import analyze_repository",
-      "line": 10,
-      "resolution": "python-module",
-      "source": "architect/cli.py",
-      "target": "architect/engine.py"
-    },
-    {
-      "confidence": "exact",
-      "evidence": "from architect.reports import render_report",
-      "line": 11,
-      "resolution": "python-module",
-      "source": "architect/cli.py",
-      "target": "architect/reports.py"
-    },
-    {
-      "confidence": "exact",
-      "evidence": "from architect.analyzers import (",
-      "line": 10,
-      "resolution": "python-module",
-      "source": "architect/engine.py",
-      "target": "architect/analyzers.py"
-    },
-    {
-      "confidence": "exact",
-      "evidence": "from architect.config import ArchitectConfig, _matches, load_config",
-      "line": 18,
-      "resolution": "python-module",
-      "source": "architect/engine.py",
-      "target": "architect/config.py"
-    },
-    {
-      "confidence": "exact",
-      "evidence": "from architect.models import AnalysisGraph, DependencyEdge, FileMetrics, FileNode, Finding",
+      "evidence": "from .schemas import RaceInsights, TelemetryPoint",
       "line": 19,
       "resolution": "python-module",
-      "source": "architect/engine.py",
-      "target": "architect/models.py"
+      "source": "backend/src/main.py",
+      "target": "backend/src/schemas.py"
     },
     {
       "confidence": "exact",
-      "evidence": "from architect.models import AnalysisGraph",
-      "line": 8,
+      "evidence": "from .stream.producer import engine as replay_engine",
+      "line": 18,
       "resolution": "python-module",
-      "source": "architect/reports.py",
-      "target": "architect/models.py"
+      "source": "backend/src/main.py",
+      "target": "backend/src/stream/producer.py"
     },
     {
       "confidence": "exact",
-      "evidence": "import { analysisResults, analysisStatus, cancelAnalysis, explainFinding, serverHealth, startAnalysis } from './api'",
+      "evidence": "from ..config import get_settings",
+      "line": 22,
+      "resolution": "python-module",
+      "source": "backend/src/stream/bus.py",
+      "target": "backend/src/config.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from ..config import get_settings",
+      "line": 25,
+      "resolution": "python-module",
+      "source": "backend/src/stream/consumer.py",
+      "target": "backend/src/config.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from . import bus",
+      "line": 26,
+      "resolution": "python-module",
+      "source": "backend/src/stream/consumer.py",
+      "target": "backend/src/stream/bus.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from ..config import get_settings",
+      "line": 22,
+      "resolution": "python-module",
+      "source": "backend/src/stream/producer.py",
+      "target": "backend/src/config.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "from .events import build_replay_events",
+      "line": 23,
+      "resolution": "python-module",
+      "source": "backend/src/stream/producer.py",
+      "target": "backend/src/stream/events.py"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import TopNavbar from \"./components/TopNavbar\";",
       "line": 3,
       "resolution": "js-module",
-      "source": "frontend/src/App.tsx",
-      "target": "frontend/src/api.ts"
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/components/TopNavbar.jsx"
     },
     {
       "confidence": "exact",
-      "evidence": "import { DependencyGraph } from './components/DependencyGraph'",
+      "evidence": "import CalenderPage from \"./features/calender/CalenderPage\";",
+      "line": 8,
+      "resolution": "js-module",
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/features/calender/CalenderPage.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import DocsPage from \"./features/docs/DocsPage\";",
+      "line": 12,
+      "resolution": "js-module",
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/features/docs/DocsPage.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import LandingPage from \"./features/landing/LandingPage\";",
+      "line": 11,
+      "resolution": "js-module",
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/features/landing/LandingPage.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import LapTimesPage from \"./features/lap-times/LapTimesPage\";",
       "line": 4,
       "resolution": "js-module",
-      "source": "frontend/src/App.tsx",
-      "target": "frontend/src/components/DependencyGraph.tsx"
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/features/lap-times/LapTimesPage.jsx"
     },
     {
       "confidence": "exact",
-      "evidence": "import type { FileNode, Finding, Graph, Job } from './types'",
+      "evidence": "import LivePage from \"./features/live/LivePage\";",
+      "line": 10,
+      "resolution": "js-module",
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/features/live/LivePage.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import RaceControlPage from \"./features/race-control/RaceControlPage\";",
       "line": 5,
       "resolution": "js-module",
-      "source": "frontend/src/App.tsx",
-      "target": "frontend/src/types.ts"
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/features/race-control/RaceControlPage.jsx"
     },
     {
       "confidence": "exact",
-      "evidence": "import type { Finding, Graph, Job } from './types'",
-      "line": 1,
+      "evidence": "import StrategyPage from \"./features/strategy/StrategyPage\";",
+      "line": 6,
       "resolution": "js-module",
-      "source": "frontend/src/api.ts",
-      "target": "frontend/src/types.ts"
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/features/strategy/StrategyPage.jsx"
     },
     {
       "confidence": "exact",
-      "evidence": "import type { Edge, FileNode } from '../types'",
-      "line": 2,
+      "evidence": "import TechnicalPage from \"./features/technical/TechnicalPage\";",
+      "line": 7,
       "resolution": "js-module",
-      "source": "frontend/src/components/DependencyGraph.tsx",
-      "target": "frontend/src/types.ts"
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/features/technical/TechnicalPage.jsx"
     },
     {
       "confidence": "exact",
-      "evidence": "import App from './App.tsx'",
+      "evidence": "import TelemetryPage from \"./features/telemetry/TelemetryPage\";",
+      "line": 9,
+      "resolution": "js-module",
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/features/telemetry/TelemetryPage.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import { getRaceStatus, normalizeKey } from \"./calendarUtils\";",
+      "line": 6,
+      "resolution": "js-module",
+      "source": "frontend/src/features/calender/CalenderPage.jsx",
+      "target": "frontend/src/features/calender/calendarUtils.js"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import CalendarRaceDetail from \"./components/CalendarRaceDetail\";",
       "line": 4,
       "resolution": "js-module",
-      "source": "frontend/src/main.tsx",
-      "target": "frontend/src/App.tsx"
+      "source": "frontend/src/features/calender/CalenderPage.jsx",
+      "target": "frontend/src/features/calender/components/CalendarRaceDetail.jsx"
     },
     {
       "confidence": "exact",
-      "evidence": "from architect.cli import main",
-      "line": 8,
-      "resolution": "python-module",
-      "source": "tests/test_cli.py",
-      "target": "architect/cli.py"
+      "evidence": "import CalendarRaceList from \"./components/CalendarRaceList\";",
+      "line": 5,
+      "resolution": "js-module",
+      "source": "frontend/src/features/calender/CalenderPage.jsx",
+      "target": "frontend/src/features/calender/components/CalendarRaceList.jsx"
     },
     {
       "confidence": "exact",
-      "evidence": "from architect.engine import analyze_repository, strongly_connected_cycles",
-      "line": 7,
-      "resolution": "python-module",
-      "source": "tests/test_engine.py",
-      "target": "architect/engine.py"
+      "evidence": "import { useRaceCalendar, useRaceTrackIntel } from \"../../hooks/useRaceData\";",
+      "line": 3,
+      "resolution": "js-module",
+      "source": "frontend/src/features/calender/CalenderPage.jsx",
+      "target": "frontend/src/hooks/useRaceData.js"
     },
     {
       "confidence": "exact",
-      "evidence": "from architect.models import DependencyEdge",
-      "line": 8,
-      "resolution": "python-module",
-      "source": "tests/test_engine.py",
-      "target": "architect/models.py"
+      "evidence": "import { normalizeKey } from \"./calendarUtils\";",
+      "line": 1,
+      "resolution": "js-module",
+      "source": "frontend/src/features/calender/circuitImageRegistry.js",
+      "target": "frontend/src/features/calender/calendarUtils.js"
     },
     {
       "confidence": "exact",
-      "evidence": "from architect.baseline import active_fingerprints",
-      "line": 8,
-      "resolution": "python-module",
-      "source": "tests/test_governance_and_reports.py",
-      "target": "architect/baseline.py"
+      "evidence": "import { formatEventWindow, getRaceStatus } from \"../calendarUtils\";",
+      "line": 2,
+      "resolution": "js-module",
+      "source": "frontend/src/features/calender/components/CalendarRaceCard.jsx",
+      "target": "frontend/src/features/calender/calendarUtils.js"
     },
     {
       "confidence": "exact",
-      "evidence": "from architect.engine import analyze_repository",
-      "line": 9,
-      "resolution": "python-module",
-      "source": "tests/test_governance_and_reports.py",
-      "target": "architect/engine.py"
-    },
-    {
-      "confidence": "exact",
-      "evidence": "from architect.reports import html_report, sarif_report",
+      "evidence": "const CircuitScene3D = lazy(() => import(\"./CircuitScene3D\"));",
       "line": 10,
-      "resolution": "python-module",
-      "source": "tests/test_governance_and_reports.py",
-      "target": "architect/reports.py"
+      "resolution": "js-module",
+      "source": "frontend/src/features/calender/components/CalendarRaceDetail.jsx",
+      "target": "frontend/src/features/calender/components/CircuitScene3D.jsx"
     },
     {
       "confidence": "exact",
-      "evidence": "from architect.storage import AnalysisStore",
+      "evidence": "import TrackIntelCard from \"./TrackIntelCard\";",
+      "line": 8,
+      "resolution": "js-module",
+      "source": "frontend/src/features/calender/components/CalendarRaceDetail.jsx",
+      "target": "frontend/src/features/calender/components/TrackIntelCard.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import CalendarRaceCard from \"./CalendarRaceCard\";",
+      "line": 3,
+      "resolution": "js-module",
+      "source": "frontend/src/features/calender/components/CalendarRaceList.jsx",
+      "target": "frontend/src/features/calender/components/CalendarRaceCard.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import { getCircuitGeometry } from \"../circuitGeometry\";",
+      "line": 4,
+      "resolution": "js-module",
+      "source": "frontend/src/features/calender/components/CircuitScene3D.jsx",
+      "target": "frontend/src/features/calender/circuitGeometry.js"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import { getCircuitImageUrl } from \"../circuitImageRegistry\";",
+      "line": 2,
+      "resolution": "js-module",
+      "source": "frontend/src/features/calender/components/TrackMapCard.jsx",
+      "target": "frontend/src/features/calender/circuitImageRegistry.js"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import { SpeedTrace } from \"./SpeedTrace\";",
+      "line": 4,
+      "resolution": "js-module",
+      "source": "frontend/src/features/landing/LandingPage.jsx",
+      "target": "frontend/src/features/landing/SpeedTrace.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import { getDriverColor } from \"../../theme/f1colors\";",
+      "line": 11,
+      "resolution": "js-module",
+      "source": "frontend/src/features/lap-times/GapChart.jsx",
+      "target": "frontend/src/theme/f1colors.js"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import DriverPanel from \"../../components/DriverPanel\";",
+      "line": 3,
+      "resolution": "js-module",
+      "source": "frontend/src/features/lap-times/LapTimeController.jsx",
+      "target": "frontend/src/components/DriverPanel.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import FastestLapCard from \"../../components/FastestLapCard\";",
       "line": 7,
-      "resolution": "python-module",
-      "source": "tests/test_storage.py",
-      "target": "architect/storage.py"
+      "resolution": "js-module",
+      "source": "frontend/src/features/lap-times/LapTimeController.jsx",
+      "target": "frontend/src/components/FastestLapCard.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import RaceWinnerCard from \"../../components/RaceWinnerCard\";",
+      "line": 8,
+      "resolution": "js-module",
+      "source": "frontend/src/features/lap-times/LapTimeController.jsx",
+      "target": "frontend/src/components/RaceWinnerCard.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import GapChart from \"./GapChart\";",
+      "line": 5,
+      "resolution": "js-module",
+      "source": "frontend/src/features/lap-times/LapTimeController.jsx",
+      "target": "frontend/src/features/lap-times/GapChart.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import PaceChart from \"./PaceChart\";",
+      "line": 4,
+      "resolution": "js-module",
+      "source": "frontend/src/features/lap-times/LapTimeController.jsx",
+      "target": "frontend/src/features/lap-times/PaceChart.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import RaceAnalyticsDashboard from \"./RaceAnalyticsDashboard\";",
+      "line": 6,
+      "resolution": "js-module",
+      "source": "frontend/src/features/lap-times/LapTimeController.jsx",
+      "target": "frontend/src/features/lap-times/RaceAnalyticsDashboard.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import { useWorkerizedData } from \"./useWorkerizedData\";",
+      "line": 9,
+      "resolution": "js-module",
+      "source": "frontend/src/features/lap-times/LapTimeController.jsx",
+      "target": "frontend/src/features/lap-times/useWorkerizedData.js"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import { useRaceMeta, useRaceAnalytics } from \"../../hooks/useRaceData\";",
+      "line": 2,
+      "resolution": "js-module",
+      "source": "frontend/src/features/lap-times/LapTimeController.jsx",
+      "target": "frontend/src/hooks/useRaceData.js"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import LapTimeController from \"./LapTimeController\";",
+      "line": 2,
+      "resolution": "js-module",
+      "source": "frontend/src/features/lap-times/LapTimesPage.jsx",
+      "target": "frontend/src/features/lap-times/LapTimeController.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import { getDriverColor } from \"../../theme/f1colors\";",
+      "line": 12,
+      "resolution": "js-module",
+      "source": "frontend/src/features/lap-times/PaceChart.jsx",
+      "target": "frontend/src/theme/f1colors.js"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import { GapRibbon } from \"./GapRibbon\";",
+      "line": 7,
+      "resolution": "js-module",
+      "source": "frontend/src/features/live/LivePage.jsx",
+      "target": "frontend/src/features/live/GapRibbon.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import { TimingTower, formatLapTime } from \"./TimingTower\";",
+      "line": 8,
+      "resolution": "js-module",
+      "source": "frontend/src/features/live/LivePage.jsx",
+      "target": "frontend/src/features/live/TimingTower.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import { useDemoReplay } from \"./useDemoReplay\";",
+      "line": 6,
+      "resolution": "js-module",
+      "source": "frontend/src/features/live/LivePage.jsx",
+      "target": "frontend/src/features/live/useDemoReplay.js"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import { useLiveStream } from \"./useLiveStream\";",
+      "line": 5,
+      "resolution": "js-module",
+      "source": "frontend/src/features/live/LivePage.jsx",
+      "target": "frontend/src/features/live/useLiveStream.js"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import RaceAnalyticsDashboard from \"../lap-times/RaceAnalyticsDashboard\";",
+      "line": 3,
+      "resolution": "js-module",
+      "source": "frontend/src/features/race-control/RaceControlPage.jsx",
+      "target": "frontend/src/features/lap-times/RaceAnalyticsDashboard.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import { useRaceAnalytics } from \"../../hooks/useRaceData\";",
+      "line": 2,
+      "resolution": "js-module",
+      "source": "frontend/src/features/race-control/RaceControlPage.jsx",
+      "target": "frontend/src/hooks/useRaceData.js"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import LapTimeController from \"../lap-times/LapTimeController\";",
+      "line": 2,
+      "resolution": "js-module",
+      "source": "frontend/src/features/strategy/StrategyPage.jsx",
+      "target": "frontend/src/features/lap-times/LapTimeController.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import LapTimeController from \"../lap-times/LapTimeController\";",
+      "line": 2,
+      "resolution": "js-module",
+      "source": "frontend/src/features/technical/TechnicalPage.jsx",
+      "target": "frontend/src/features/lap-times/LapTimeController.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import DriverPanel from \"../../components/DriverPanel\";",
+      "line": 20,
+      "resolution": "js-module",
+      "source": "frontend/src/features/telemetry/TelemetryPage.jsx",
+      "target": "frontend/src/components/DriverPanel.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import LapTireMatrixPanel from \"./LapTireMatrixPanel\";",
+      "line": 21,
+      "resolution": "js-module",
+      "source": "frontend/src/features/telemetry/TelemetryPage.jsx",
+      "target": "frontend/src/features/telemetry/LapTireMatrixPanel.jsx"
+    },
+    {
+      "confidence": "exact",
+      "evidence": "import App from \"./App.jsx\";",
+      "line": 5,
+      "resolution": "js-module",
+      "source": "frontend/src/main.jsx",
+      "target": "frontend/src/App.jsx"
     }
   ],
-  "external_count": 107,
+  "external_count": 228,
   "files": [
     {
-      "content_hash": "f273dd6214e5e0422b6d8b09dca7f27f021b6124316e4e180160095e208e61fa",
+      "content_hash": "1595da42982d8a0d57ec62f15bec399a5540655b3d4c007d9542519badc500e1",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 20
+      },
+      "path": "backend/demo_api.py",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 26,
+          "name": "slug"
+        },
+        {
+          "kind": "function",
+          "line": 30,
+          "name": "_load_json"
+        },
+        {
+          "kind": "function",
+          "line": 35,
+          "name": "manifest"
+        },
+        {
+          "kind": "function",
+          "line": 43,
+          "name": "race_payload"
+        },
+        {
+          "kind": "function",
+          "line": 50,
+          "name": "race"
+        },
+        {
+          "kind": "function",
+          "line": 61,
+          "name": "_origins"
+        },
+        {
+          "kind": "function",
+          "line": 76,
+          "name": "health"
+        },
+        {
+          "kind": "function",
+          "line": 82,
+          "name": "demo_manifest"
+        },
+        {
+          "kind": "function",
+          "line": 87,
+          "name": "races"
+        },
+        {
+          "kind": "function",
+          "line": 93,
+          "name": "calendar"
+        },
+        {
+          "kind": "function",
+          "line": 115,
+          "name": "meta"
+        },
+        {
+          "kind": "function",
+          "line": 120,
+          "name": "analytics"
+        },
+        {
+          "kind": "function",
+          "line": 125,
+          "name": "insights"
+        },
+        {
+          "kind": "function",
+          "line": 130,
+          "name": "track_intel"
+        },
+        {
+          "kind": "function",
+          "line": 135,
+          "name": "telemetry"
+        },
+        {
+          "kind": "function",
+          "line": 146,
+          "name": "lap_matrix"
+        },
+        {
+          "kind": "function",
+          "line": 159,
+          "name": "lap_compare"
+        },
+        {
+          "kind": "function",
+          "line": 179,
+          "name": "replay_available"
+        },
+        {
+          "kind": "function",
+          "line": 184,
+          "name": "demo_replay"
+        },
+        {
+          "kind": "function",
+          "line": 189,
+          "name": "replay_status"
+        }
+      ]
+    },
+    {
+      "content_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "language": "python",
       "metrics": {
         "cycle_participation": 0,
@@ -222,355 +592,666 @@
         "fan_out": 0,
         "symbol_count": 0
       },
-      "path": "architect/__init__.py",
+      "path": "backend/src/__init__.py",
       "symbols": []
     },
     {
-      "content_hash": "86a24fb5a702b898a29bf0a3b1aa85a6fb935ccf9c1dc27152b7b05240536b05",
+      "content_hash": "d728062c6d00e3fbf20e9fc17336d54269d577a373f2e92a3e6b59f3ad6aa96f",
       "language": "python",
       "metrics": {
         "cycle_participation": 0,
         "dependency_depth": 1,
         "fan_in": 1,
         "fan_out": 1,
-        "symbol_count": 13
+        "symbol_count": 16
       },
-      "path": "architect/analyzers.py",
+      "path": "backend/src/cache.py",
       "symbols": [
         {
           "kind": "class",
-          "line": 18,
-          "name": "ImportReference"
-        },
-        {
-          "kind": "class",
-          "line": 28,
-          "name": "ParsedFile"
-        },
-        {
-          "kind": "class",
-          "line": 36,
-          "name": "PythonAnalyzer"
+          "line": 63,
+          "name": "ComputationInProgress"
         },
         {
           "kind": "function",
-          "line": 39,
-          "name": "parse"
+          "line": 69,
+          "name": "connect"
         },
         {
-          "kind": "class",
+          "kind": "function",
           "line": 89,
-          "name": "JavaScriptAnalyzer"
+          "name": "disconnect"
         },
         {
           "kind": "function",
-          "line": 92,
-          "name": "parse"
+          "line": 96,
+          "name": "is_connected"
         },
         {
           "kind": "function",
-          "line": 117,
-          "name": "analyzer_for"
+          "line": 105,
+          "name": "_coerce_keys"
         },
         {
           "kind": "function",
-          "line": 125,
-          "name": "python_module_index"
+          "line": 123,
+          "name": "_dumps"
         },
         {
           "kind": "function",
-          "line": 140,
-          "name": "resolve_python"
+          "line": 132,
+          "name": "_loads"
         },
         {
           "kind": "function",
-          "line": 181,
-          "name": "load_tsconfig_aliases"
+          "line": 138,
+          "name": "make_key"
+        },
+        {
+          "kind": "function",
+          "line": 151,
+          "name": "_event_date"
+        },
+        {
+          "kind": "function",
+          "line": 163,
+          "name": "ttl_for_event"
+        },
+        {
+          "kind": "function",
+          "line": 187,
+          "name": "_bump"
         },
         {
           "kind": "function",
           "line": 196,
-          "name": "resolve_javascript"
+          "name": "stats"
         },
         {
           "kind": "function",
-          "line": 243,
-          "name": "_line"
+          "line": 218,
+          "name": "cached"
         },
         {
           "kind": "function",
-          "line": 247,
-          "name": "_hash"
+          "line": 311,
+          "name": "_filename_to_key"
+        },
+        {
+          "kind": "function",
+          "line": 316,
+          "name": "seed_from_disk"
+        },
+        {
+          "kind": "function",
+          "line": 367,
+          "name": "invalidate"
         }
       ]
     },
     {
-      "content_hash": "1f2b4b84cca284bd33eb82e71f4283fe4f41b6937e6fa9b45004897afd90e31a",
+      "content_hash": "3e31544dc9918b925034eb40909a9e152f2ab6ecdcd606463851265a832d3cd6",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 5,
+        "fan_out": 0,
+        "symbol_count": 3
+      },
+      "path": "backend/src/config.py",
+      "symbols": [
+        {
+          "kind": "class",
+          "line": 12,
+          "name": "Settings"
+        },
+        {
+          "kind": "function",
+          "line": 50,
+          "name": "origins"
+        },
+        {
+          "kind": "function",
+          "line": 55,
+          "name": "get_settings"
+        }
+      ]
+    },
+    {
+      "content_hash": "ecafafe533073f8f835e1aca77deeeade60fe03b207daf3b1353d15bced0c007",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 1,
+        "fan_in": 1,
+        "fan_out": 1,
+        "symbol_count": 9
+      },
+      "path": "backend/src/live.py",
+      "symbols": [
+        {
+          "kind": "class",
+          "line": 22,
+          "name": "LiveHub"
+        },
+        {
+          "kind": "function",
+          "line": 23,
+          "name": "__init__"
+        },
+        {
+          "kind": "function",
+          "line": 29,
+          "name": "connect"
+        },
+        {
+          "kind": "function",
+          "line": 39,
+          "name": "disconnect"
+        },
+        {
+          "kind": "function",
+          "line": 43,
+          "name": "broadcast"
+        },
+        {
+          "kind": "function",
+          "line": 58,
+          "name": "client_count"
+        },
+        {
+          "kind": "function",
+          "line": 63,
+          "name": "_pump"
+        },
+        {
+          "kind": "function",
+          "line": 78,
+          "name": "start"
+        },
+        {
+          "kind": "function",
+          "line": 82,
+          "name": "stop"
+        }
+      ]
+    },
+    {
+      "content_hash": "5728bdc2585a748f4ad35c6538b42e77a89321a77444667d462fe384e9c11bb9",
       "language": "python",
       "metrics": {
         "cycle_participation": 0,
         "dependency_depth": 2,
         "fan_in": 0,
-        "fan_out": 3,
-        "symbol_count": 12
+        "fan_out": 6,
+        "symbol_count": 29
       },
-      "path": "architect/api_server.py",
+      "path": "backend/src/main.py",
       "symbols": [
         {
+          "kind": "function",
+          "line": 25,
+          "name": "_to_json_safe"
+        },
+        {
+          "kind": "function",
+          "line": 36,
+          "name": "lifespan"
+        },
+        {
           "kind": "class",
-          "line": 22,
-          "name": "CreateAnalysisRequest"
-        },
-        {
-          "kind": "class",
-          "line": 26,
-          "name": "ExplanationRequest"
-        },
-        {
-          "kind": "function",
-          "line": 40,
-          "name": "_safe_root"
-        },
-        {
-          "kind": "function",
-          "line": 51,
-          "name": "_run_analysis"
-        },
-        {
-          "kind": "function",
-          "line": 66,
-          "name": "_analysis"
+          "line": 61,
+          "name": "CacheHeaderMiddleware"
         },
         {
           "kind": "function",
           "line": 75,
-          "name": "health"
+          "name": "__init__"
         },
         {
           "kind": "function",
-          "line": 80,
-          "name": "create_analysis"
+          "line": 78,
+          "name": "__call__"
         },
         {
           "kind": "function",
-          "line": 88,
-          "name": "get_analysis"
+          "line": 85,
+          "name": "send_with_header"
         },
         {
           "kind": "function",
-          "line": 97,
-          "name": "get_findings"
+          "line": 99,
+          "name": "_fail"
         },
         {
           "kind": "function",
-          "line": 105,
-          "name": "get_graph"
+          "line": 111,
+          "name": "health_check"
         },
         {
           "kind": "function",
-          "line": 114,
-          "name": "create_explanation"
+          "line": 116,
+          "name": "cache_stats"
+        },
+        {
+          "kind": "function",
+          "line": 121,
+          "name": "cache_invalidate"
         },
         {
           "kind": "function",
           "line": 129,
-          "name": "delete_analysis"
+          "name": "_schedule"
+        },
+        {
+          "kind": "function",
+          "line": 136,
+          "name": "get_races"
+        },
+        {
+          "kind": "function",
+          "line": 143,
+          "name": "_calendar"
+        },
+        {
+          "kind": "function",
+          "line": 160,
+          "name": "get_calendar"
+        },
+        {
+          "kind": "function",
+          "line": 170,
+          "name": "get_race_meta"
+        },
+        {
+          "kind": "function",
+          "line": 182,
+          "name": "get_race_track_intel"
+        },
+        {
+          "kind": "function",
+          "line": 194,
+          "name": "get_race_analytics"
+        },
+        {
+          "kind": "function",
+          "line": 206,
+          "name": "get_insights"
+        },
+        {
+          "kind": "function",
+          "line": 220,
+          "name": "get_telemetry"
+        },
+        {
+          "kind": "function",
+          "line": 234,
+          "name": "get_driver_telemetry"
+        },
+        {
+          "kind": "function",
+          "line": 250,
+          "name": "lap_tire_matrix"
+        },
+        {
+          "kind": "function",
+          "line": 266,
+          "name": "lap_compare_telemetry"
+        },
+        {
+          "kind": "function",
+          "line": 303,
+          "name": "_replayable"
+        },
+        {
+          "kind": "function",
+          "line": 315,
+          "name": "replay_available"
+        },
+        {
+          "kind": "function",
+          "line": 321,
+          "name": "replay_start"
+        },
+        {
+          "kind": "function",
+          "line": 335,
+          "name": "loader"
+        },
+        {
+          "kind": "function",
+          "line": 351,
+          "name": "replay_stop"
+        },
+        {
+          "kind": "function",
+          "line": 356,
+          "name": "replay_status"
+        },
+        {
+          "kind": "function",
+          "line": 361,
+          "name": "live_socket"
         }
       ]
     },
     {
-      "content_hash": "570d3a12cb3d2aaf641f681864220a43a90584897aa824f1e96a4d35ad05579f",
-      "language": "python",
-      "metrics": {
-        "cycle_participation": 0,
-        "dependency_depth": 2,
-        "fan_in": 2,
-        "fan_out": 2,
-        "symbol_count": 2
-      },
-      "path": "architect/baseline.py",
-      "symbols": [
-        {
-          "kind": "function",
-          "line": 14,
-          "name": "active_fingerprints"
-        },
-        {
-          "kind": "function",
-          "line": 26,
-          "name": "load_baseline"
-        }
-      ]
-    },
-    {
-      "content_hash": "494e1f755974aa977448fd1e41975d6bec0a62c1afd09c49b0b047d83affe926",
-      "language": "python",
-      "metrics": {
-        "cycle_participation": 0,
-        "dependency_depth": 2,
-        "fan_in": 1,
-        "fan_out": 3,
-        "symbol_count": 4
-      },
-      "path": "architect/cli.py",
-      "symbols": [
-        {
-          "kind": "function",
-          "line": 14,
-          "name": "build_parser"
-        },
-        {
-          "kind": "function",
-          "line": 49,
-          "name": "_path_arguments"
-        },
-        {
-          "kind": "function",
-          "line": 54,
-          "name": "_write"
-        },
-        {
-          "kind": "function",
-          "line": 63,
-          "name": "main"
-        }
-      ]
-    },
-    {
-      "content_hash": "700d391372e604ceefecb04034c8aec3ea111924fb63369275af1b88c68cdeb6",
+      "content_hash": "c9d4c09ce9b4c36bf1dadbfbdd9f1a7926cff1f2fad9647279ae159a160c65f5",
       "language": "python",
       "metrics": {
         "cycle_participation": 0,
         "dependency_depth": 0,
         "fan_in": 1,
         "fan_out": 0,
-        "symbol_count": 10
+        "symbol_count": 33
       },
-      "path": "architect/config.py",
+      "path": "backend/src/processor.py",
       "symbols": [
         {
           "kind": "class",
-          "line": 21,
-          "name": "Layer"
-        },
-        {
-          "kind": "class",
-          "line": 27,
-          "name": "Suppression"
-        },
-        {
-          "kind": "class",
-          "line": 35,
-          "name": "ArchitectConfig"
+          "line": 7,
+          "name": "F1DataProcessor"
         },
         {
           "kind": "function",
-          "line": 51,
-          "name": "included"
+          "line": 8,
+          "name": "__init__"
         },
         {
           "kind": "function",
-          "line": 57,
-          "name": "excluded"
+          "line": 23,
+          "name": "get_minimal_meta"
         },
         {
           "kind": "function",
-          "line": 61,
-          "name": "layer_for"
+          "line": 93,
+          "name": "_canonical_place"
         },
         {
           "kind": "function",
-          "line": 68,
-          "name": "_matches"
+          "line": 98,
+          "name": "_same_circuit_last_year"
         },
         {
           "kind": "function",
-          "line": 79,
-          "name": "_as_list"
+          "line": 116,
+          "name": "get_track_intel"
         },
         {
           "kind": "function",
-          "line": 87,
-          "name": "load_config"
+          "line": 226,
+          "name": "get_selective_telemetry"
         },
         {
           "kind": "function",
-          "line": 103,
-          "name": "dependency_pairs"
+          "line": 256,
+          "name": "get_lap_tire_matrix"
+        },
+        {
+          "kind": "function",
+          "line": 308,
+          "name": "_get_session"
+        },
+        {
+          "kind": "function",
+          "line": 325,
+          "name": "_td_to_seconds"
+        },
+        {
+          "kind": "function",
+          "line": 341,
+          "name": "_format_time_min_sec"
+        },
+        {
+          "kind": "function",
+          "line": 364,
+          "name": "_safe_float"
+        },
+        {
+          "kind": "function",
+          "line": 382,
+          "name": "_safe_int"
+        },
+        {
+          "kind": "function",
+          "line": 399,
+          "name": "_build_driver_reference"
+        },
+        {
+          "kind": "function",
+          "line": 422,
+          "name": "_prepare_lap_frame"
+        },
+        {
+          "kind": "function",
+          "line": 442,
+          "name": "_build_lap_times_payload"
+        },
+        {
+          "kind": "function",
+          "line": 498,
+          "name": "_build_gap_payload"
+        },
+        {
+          "kind": "function",
+          "line": 533,
+          "name": "_build_tire_payload"
+        },
+        {
+          "kind": "function",
+          "line": 579,
+          "name": "_build_pit_payload"
+        },
+        {
+          "kind": "function",
+          "line": 636,
+          "name": "_build_undercut_overcut_payload"
+        },
+        {
+          "kind": "function",
+          "line": 702,
+          "name": "_build_driver_comparison_payload"
+        },
+        {
+          "kind": "function",
+          "line": 778,
+          "name": "_build_weather_payload"
+        },
+        {
+          "kind": "function",
+          "line": 831,
+          "name": "_build_fuel_payload"
+        },
+        {
+          "kind": "function",
+          "line": 890,
+          "name": "_build_replay_setup_payload"
+        },
+        {
+          "kind": "function",
+          "line": 926,
+          "name": "get_race_analytics"
+        },
+        {
+          "kind": "function",
+          "line": 982,
+          "name": "get_race_insights"
+        },
+        {
+          "kind": "function",
+          "line": 1014,
+          "name": "get_fastest_telemetry"
+        },
+        {
+          "kind": "function",
+          "line": 1029,
+          "name": "_downsample_indices"
+        },
+        {
+          "kind": "function",
+          "line": 1036,
+          "name": "_series_to_json_list"
+        },
+        {
+          "kind": "function",
+          "line": 1048,
+          "name": "_pick_lap"
+        },
+        {
+          "kind": "function",
+          "line": 1064,
+          "name": "_extract_single_lap_series"
+        },
+        {
+          "kind": "function",
+          "line": 1139,
+          "name": "_compute_delta_series"
+        },
+        {
+          "kind": "function",
+          "line": 1159,
+          "name": "compare_lap_telemetry"
         }
       ]
     },
     {
-      "content_hash": "c97ceca4067390de8bd69597bd4d9ed4a9df907ced15f3e714582e0c6bef2b6f",
+      "content_hash": "5e497cfb2dfae555485bccae4ded58e65866b6807332b85092729bbbe3f6661e",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 4
+      },
+      "path": "backend/src/schemas.py",
+      "symbols": [
+        {
+          "kind": "class",
+          "line": 4,
+          "name": "Stint"
+        },
+        {
+          "kind": "class",
+          "line": 10,
+          "name": "Pace"
+        },
+        {
+          "kind": "class",
+          "line": 15,
+          "name": "TelemetryPoint"
+        },
+        {
+          "kind": "class",
+          "line": 21,
+          "name": "RaceInsights"
+        }
+      ]
+    },
+    {
+      "content_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 0
+      },
+      "path": "backend/src/stream/__init__.py",
+      "symbols": []
+    },
+    {
+      "content_hash": "ce0f169f9da394a64c84ba9fcf5bee4fc8a4a7470fd3535859b06e7faf8ed172",
       "language": "python",
       "metrics": {
         "cycle_participation": 0,
         "dependency_depth": 1,
-        "fan_in": 5,
-        "fan_out": 3,
-        "symbol_count": 11
+        "fan_in": 1,
+        "fan_out": 1,
+        "symbol_count": 4
       },
-      "path": "architect/engine.py",
+      "path": "backend/src/stream/bus.py",
       "symbols": [
         {
-          "kind": "class",
-          "line": 22,
-          "name": "AnalysisCancelled"
+          "kind": "function",
+          "line": 31,
+          "name": "_client"
         },
         {
           "kind": "function",
-          "line": 30,
-          "name": "analyze_repository"
+          "line": 38,
+          "name": "publish"
         },
         {
           "kind": "function",
-          "line": 134,
-          "name": "_discover"
+          "line": 46,
+          "name": "subscribe"
         },
         {
           "kind": "function",
-          "line": 151,
-          "name": "_dedupe_edges"
-        },
-        {
-          "kind": "function",
-          "line": 156,
-          "name": "strongly_connected_cycles"
-        },
-        {
-          "kind": "function",
-          "line": 171,
-          "name": "visit"
-        },
-        {
-          "kind": "function",
-          "line": 200,
-          "name": "_governance_findings"
-        },
-        {
-          "kind": "function",
-          "line": 265,
-          "name": "_compute_metrics"
-        },
-        {
-          "kind": "function",
-          "line": 280,
-          "name": "depth"
-        },
-        {
-          "kind": "function",
-          "line": 305,
-          "name": "_apply_suppressions"
-        },
-        {
-          "kind": "function",
-          "line": 318,
-          "name": "_finding"
+          "line": 65,
+          "name": "close"
         }
       ]
     },
     {
-      "content_hash": "b45af877b49317d43ce512493bf07e22601a35d9374b92c343545f82fc547003",
+      "content_hash": "16a4eb30b4a168f3ca658d6218ec52e35b4aa84d3bd8ce2ad16317d2dd65b4f5",
+      "language": "python",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 1,
+        "fan_in": 0,
+        "fan_out": 2,
+        "symbol_count": 8
+      },
+      "path": "backend/src/stream/consumer.py",
+      "symbols": [
+        {
+          "kind": "class",
+          "line": 32,
+          "name": "RaceState"
+        },
+        {
+          "kind": "function",
+          "line": 41,
+          "name": "__init__"
+        },
+        {
+          "kind": "function",
+          "line": 44,
+          "name": "reset"
+        },
+        {
+          "kind": "function",
+          "line": 54,
+          "name": "apply"
+        },
+        {
+          "kind": "function",
+          "line": 130,
+          "name": "standings"
+        },
+        {
+          "kind": "function",
+          "line": 178,
+          "name": "consume"
+        },
+        {
+          "kind": "function",
+          "line": 213,
+          "name": "publish_standings"
+        },
+        {
+          "kind": "function",
+          "line": 227,
+          "name": "pump"
+        }
+      ]
+    },
+    {
+      "content_hash": "4f924f7d86723392efc922d8e757d2dc4f1c447fa56a410e3ed64b2ce7d6bb28",
       "language": "python",
       "metrics": {
         "cycle_participation": 0,
@@ -579,169 +1260,61 @@
         "fan_out": 0,
         "symbol_count": 1
       },
-      "path": "architect/explanations.py",
+      "path": "backend/src/stream/events.py",
       "symbols": [
         {
           "kind": "function",
-          "line": 7,
-          "name": "explain_finding"
+          "line": 18,
+          "name": "build_replay_events"
         }
       ]
     },
     {
-      "content_hash": "5af22587f056998ec56398a558f889874f5c7b109961e668087e09466643e924",
-      "language": "python",
-      "metrics": {
-        "cycle_participation": 0,
-        "dependency_depth": 0,
-        "fan_in": 5,
-        "fan_out": 0,
-        "symbol_count": 8
-      },
-      "path": "architect/models.py",
-      "symbols": [
-        {
-          "kind": "class",
-          "line": 8,
-          "name": "Symbol"
-        },
-        {
-          "kind": "class",
-          "line": 15,
-          "name": "FileMetrics"
-        },
-        {
-          "kind": "class",
-          "line": 24,
-          "name": "FileNode"
-        },
-        {
-          "kind": "class",
-          "line": 33,
-          "name": "DependencyEdge"
-        },
-        {
-          "kind": "function",
-          "line": 42,
-          "name": "key"
-        },
-        {
-          "kind": "class",
-          "line": 47,
-          "name": "Finding"
-        },
-        {
-          "kind": "class",
-          "line": 60,
-          "name": "AnalysisGraph"
-        },
-        {
-          "kind": "function",
-          "line": 70,
-          "name": "to_dict"
-        }
-      ]
-    },
-    {
-      "content_hash": "e1a859243e6ab8f8b3feedfd51c3df81d9a3da19c92f00722c37312a78430451",
+      "content_hash": "122876e031e5681979ad199207beb3dca0a3af1af74d6ea2fdcfe65b23bb9f22",
       "language": "python",
       "metrics": {
         "cycle_participation": 0,
         "dependency_depth": 1,
-        "fan_in": 2,
-        "fan_out": 1,
-        "symbol_count": 5
+        "fan_in": 1,
+        "fan_out": 2,
+        "symbol_count": 6
       },
-      "path": "architect/reports.py",
-      "symbols": [
-        {
-          "kind": "function",
-          "line": 11,
-          "name": "json_report"
-        },
-        {
-          "kind": "function",
-          "line": 15,
-          "name": "sarif_report"
-        },
-        {
-          "kind": "function",
-          "line": 32,
-          "name": "_sarif_result"
-        },
-        {
-          "kind": "function",
-          "line": 47,
-          "name": "html_report"
-        },
-        {
-          "kind": "function",
-          "line": 68,
-          "name": "render_report"
-        }
-      ]
-    },
-    {
-      "content_hash": "2aeec15c11105fec5028795ad10037487a852bbb317bd2130ee8223fc7915feb",
-      "language": "python",
-      "metrics": {
-        "cycle_participation": 0,
-        "dependency_depth": 0,
-        "fan_in": 2,
-        "fan_out": 0,
-        "symbol_count": 9
-      },
-      "path": "architect/storage.py",
+      "path": "backend/src/stream/producer.py",
       "symbols": [
         {
           "kind": "class",
-          "line": 13,
-          "name": "AnalysisStore"
+          "line": 28,
+          "name": "ReplayEngine"
         },
         {
           "kind": "function",
-          "line": 14,
+          "line": 29,
           "name": "__init__"
         },
         {
           "kind": "function",
-          "line": 21,
-          "name": "_connection"
+          "line": 35,
+          "name": "start"
         },
         {
           "kind": "function",
-          "line": 26,
-          "name": "create"
+          "line": 64,
+          "name": "stop"
         },
         {
           "kind": "function",
-          "line": 33,
-          "name": "get"
+          "line": 74,
+          "name": "status"
         },
         {
           "kind": "function",
-          "line": 45,
-          "name": "update"
-        },
-        {
-          "kind": "function",
-          "line": 55,
-          "name": "cancel"
-        },
-        {
-          "kind": "function",
-          "line": 61,
-          "name": "cancelled"
-        },
-        {
-          "kind": "function",
-          "line": 65,
-          "name": "delete"
+          "line": 79,
+          "name": "_run"
         }
       ]
     },
     {
-      "content_hash": "4efe97b16d1200fac0eaf07aa00930a8668b1f96a0be1891ace8c1e712ff0ccb",
+      "content_hash": "a783068d13ed61ae92e8ff3cd3ac285bf9648c2ce100479554229b6180fa74b1",
       "language": "javascript",
       "metrics": {
         "cycle_participation": 0,
@@ -754,111 +1327,576 @@
       "symbols": []
     },
     {
-      "content_hash": "0b102bb589ea48d08fe366b1be85792d6a0a98a4d9a2793fd5711f5fddf4a714",
-      "language": "typescript",
+      "content_hash": "5b0bc4c78be977cd81f947fb5563aaa7cc6d451e6f1c53a3260b7656a7144d20",
+      "language": "javascript",
       "metrics": {
         "cycle_participation": 0,
-        "dependency_depth": 1,
-        "fan_in": 1,
-        "fan_out": 3,
-        "symbol_count": 8
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 0
       },
-      "path": "frontend/src/App.tsx",
+      "path": "frontend/postcss.config.js",
+      "symbols": []
+    },
+    {
+      "content_hash": "f40f9a7513a4d5614b2699f4f70bb261da9c0c922722537516fcd2c3153f057b",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 4,
+        "fan_in": 1,
+        "fan_out": 10,
+        "symbol_count": 5
+      },
+      "path": "frontend/src/App.jsx",
       "symbols": [
         {
           "kind": "function",
-          "line": 9,
+          "line": 27,
+          "name": "AppShell"
+        },
+        {
+          "kind": "function",
+          "line": 34,
+          "name": "fetchRaces"
+        },
+        {
+          "kind": "function",
+          "line": 51,
+          "name": "handleDriverToggle"
+        },
+        {
+          "kind": "function",
+          "line": 62,
+          "name": "renderPage"
+        },
+        {
+          "kind": "function",
+          "line": 194,
           "name": "App"
-        },
-        {
-          "kind": "function",
-          "line": 47,
-          "name": "analyze"
-        },
-        {
-          "kind": "function",
-          "line": 52,
-          "name": "cancel"
-        },
-        {
-          "kind": "function",
-          "line": 115,
-          "name": "Metric"
-        },
-        {
-          "kind": "function",
-          "line": 117,
-          "name": "FindingList"
-        },
-        {
-          "kind": "function",
-          "line": 122,
-          "name": "EvidencePanel"
-        },
-        {
-          "kind": "function",
-          "line": 124,
-          "name": "FileTable"
-        },
-        {
-          "kind": "function",
-          "line": 126,
-          "name": "FilePanel"
         }
       ]
     },
     {
-      "content_hash": "72c6ab2f368ca12b485cb4176850e3b0b3c589c31f7b474b63eb931830bf994c",
+      "content_hash": "dcfd6be3b7bb8554a978e90c5aa137dcef2bd964949dfcb25660b565bb1bdf49",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 0
+      },
+      "path": "frontend/src/api/queryClient.js",
+      "symbols": []
+    },
+    {
+      "content_hash": "579c1351e01d8aab2cb391f7cf4de99a0b6da401858c1b04c915b1cc727a5207",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 2,
+        "fan_out": 0,
+        "symbol_count": 0
+      },
+      "path": "frontend/src/components/DriverPanel.jsx",
+      "symbols": []
+    },
+    {
+      "content_hash": "f3dc6b814816203204d643d48e4a3759a66febdbff9c25ac48cb07557b9fda9c",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/components/FastestLapCard.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 11,
+          "name": "FastestLapCard"
+        }
+      ]
+    },
+    {
+      "content_hash": "09b666ff48c99b3425632f63628a0356029497ea2113db65a2bdb2bbd903f940",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 0
+      },
+      "path": "frontend/src/components/RaceWinnerCard.jsx",
+      "symbols": []
+    },
+    {
+      "content_hash": "6b8d894bd53843c71ed2515a2aabd588d3b0032645689d21e1add8ceafd90b7e",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/components/StatCard.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 10,
+          "name": "StatCard"
+        }
+      ]
+    },
+    {
+      "content_hash": "ca184c2c7d8cb6286c40dc51fcaa3f37ad830b8d1b57454473630632179a3451",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 0
+      },
+      "path": "frontend/src/components/TopNavbar.jsx",
+      "symbols": []
+    },
+    {
+      "content_hash": "5d82982e29aad884f8bfeefa4f8ac5f706ac73511addc226f0d95dbfd7fdc8cd",
       "language": "typescript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 4
+      },
+      "path": "frontend/src/components/ui/alert.tsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 22,
+          "name": "Alert"
+        },
+        {
+          "kind": "function",
+          "line": 37,
+          "name": "AlertTitle"
+        },
+        {
+          "kind": "function",
+          "line": 50,
+          "name": "AlertDescription"
+        },
+        {
+          "kind": "function",
+          "line": 66,
+          "name": "AlertAction"
+        }
+      ]
+    },
+    {
+      "content_hash": "029e80e31b632923ff3f45bb4fc9cc5b275d20c7bb5bb383706ca37636776095",
+      "language": "typescript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/components/ui/badge.tsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 30,
+          "name": "Badge"
+        }
+      ]
+    },
+    {
+      "content_hash": "5dc7ae004070d364f6c6aec854af7e70cc1975b284a1707a6d39ec28d8d39550",
+      "language": "typescript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/components/ui/button.tsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 44,
+          "name": "Button"
+        }
+      ]
+    },
+    {
+      "content_hash": "e14db4c835cffae0caa3a6901e658d806d81870d8b8343c026655199aa65d6bb",
+      "language": "typescript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 7
+      },
+      "path": "frontend/src/components/ui/card.tsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 5,
+          "name": "Card"
+        },
+        {
+          "kind": "function",
+          "line": 23,
+          "name": "CardHeader"
+        },
+        {
+          "kind": "function",
+          "line": 36,
+          "name": "CardTitle"
+        },
+        {
+          "kind": "function",
+          "line": 49,
+          "name": "CardDescription"
+        },
+        {
+          "kind": "function",
+          "line": 59,
+          "name": "CardAction"
+        },
+        {
+          "kind": "function",
+          "line": 72,
+          "name": "CardContent"
+        },
+        {
+          "kind": "function",
+          "line": 82,
+          "name": "CardFooter"
+        }
+      ]
+    },
+    {
+      "content_hash": "f73e0fe6c446fd437c361b5a9d171eaa3d3ee530504b14c0b09ff3c99a2e458c",
+      "language": "typescript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/components/ui/label.tsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 6,
+          "name": "Label"
+        }
+      ]
+    },
+    {
+      "content_hash": "908eb0b3635d005153eb028e25a6144e799a7af438870159e6c080ba4eafe825",
+      "language": "typescript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 2
+      },
+      "path": "frontend/src/components/ui/scroll-area.tsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 6,
+          "name": "ScrollArea"
+        },
+        {
+          "kind": "function",
+          "line": 29,
+          "name": "ScrollBar"
+        }
+      ]
+    },
+    {
+      "content_hash": "1980fcfe814c7147ec41de69564b44d2397b1357b7eebbfc36331a11c6c06aaa",
+      "language": "typescript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 10
+      },
+      "path": "frontend/src/components/ui/select.tsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 9,
+          "name": "Select"
+        },
+        {
+          "kind": "function",
+          "line": 15,
+          "name": "SelectGroup"
+        },
+        {
+          "kind": "function",
+          "line": 28,
+          "name": "SelectValue"
+        },
+        {
+          "kind": "function",
+          "line": 34,
+          "name": "SelectTrigger"
+        },
+        {
+          "kind": "function",
+          "line": 60,
+          "name": "SelectContent"
+        },
+        {
+          "kind": "function",
+          "line": 98,
+          "name": "SelectLabel"
+        },
+        {
+          "kind": "function",
+          "line": 111,
+          "name": "SelectItem"
+        },
+        {
+          "kind": "function",
+          "line": 135,
+          "name": "SelectSeparator"
+        },
+        {
+          "kind": "function",
+          "line": 148,
+          "name": "SelectScrollUpButton"
+        },
+        {
+          "kind": "function",
+          "line": 166,
+          "name": "SelectScrollDownButton"
+        }
+      ]
+    },
+    {
+      "content_hash": "a6de4004178cc1a4c39d98ec9501894e2dd6839d93147b974c852cb5e57e4521",
+      "language": "typescript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/components/ui/separator.tsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 6,
+          "name": "Separator"
+        }
+      ]
+    },
+    {
+      "content_hash": "485c6867daf193a560bc4a0c5f8eea424cb823b7eddff0e6f7768ffe79eb552b",
+      "language": "typescript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/components/ui/skeleton.tsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 3,
+          "name": "Skeleton"
+        }
+      ]
+    },
+    {
+      "content_hash": "5a6494169638a20d67c928f6ee926ef3b75e77c0a4ff15b71800e3a45d2116bd",
+      "language": "typescript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 4
+      },
+      "path": "frontend/src/components/ui/tabs.tsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 9,
+          "name": "Tabs"
+        },
+        {
+          "kind": "function",
+          "line": 42,
+          "name": "TabsList"
+        },
+        {
+          "kind": "function",
+          "line": 58,
+          "name": "TabsTrigger"
+        },
+        {
+          "kind": "function",
+          "line": 77,
+          "name": "TabsContent"
+        }
+      ]
+    },
+    {
+      "content_hash": "7dad3c29ba81cf2cf2d9bfa92c090aaf34319d75385cc0f0e79f292c599af6b0",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 3,
+        "fan_in": 1,
+        "fan_out": 4,
+        "symbol_count": 2
+      },
+      "path": "frontend/src/features/calender/CalenderPage.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 18,
+          "name": "CalenderPage"
+        },
+        {
+          "kind": "function",
+          "line": 101,
+          "name": "handleSelectRace"
+        }
+      ]
+    },
+    {
+      "content_hash": "c355684e3124b3bf731a905f697be4851870861da195c5a37053390189513ae6",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 3,
+        "fan_out": 0,
+        "symbol_count": 7
+      },
+      "path": "frontend/src/features/calender/calendarUtils.js",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 1,
+          "name": "getSessionDateCandidates"
+        },
+        {
+          "kind": "function",
+          "line": 12,
+          "name": "getRaceDate"
+        },
+        {
+          "kind": "function",
+          "line": 19,
+          "name": "getRaceStatus"
+        },
+        {
+          "kind": "function",
+          "line": 32,
+          "name": "getCountdown"
+        },
+        {
+          "kind": "function",
+          "line": 60,
+          "name": "formatEventDate"
+        },
+        {
+          "kind": "function",
+          "line": 75,
+          "name": "formatEventWindow"
+        },
+        {
+          "kind": "function",
+          "line": 106,
+          "name": "normalizeKey"
+        }
+      ]
+    },
+    {
+      "content_hash": "3c5ad50c0b149e6050168bff9273d0641f6eb57851b576b8c6ab8dafa24655f9",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 3
+      },
+      "path": "frontend/src/features/calender/circuitGeometry.js",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 3,
+          "name": "venue"
+        },
+        {
+          "kind": "function",
+          "line": 40,
+          "name": "fallback"
+        },
+        {
+          "kind": "function",
+          "line": 51,
+          "name": "getCircuitGeometry"
+        }
+      ]
+    },
+    {
+      "content_hash": "dd80efd952746b354582caf49531be64403b3884956794c6a573dbac32920ac8",
+      "language": "javascript",
       "metrics": {
         "cycle_participation": 0,
         "dependency_depth": 1,
         "fan_in": 1,
         "fan_out": 1,
-        "symbol_count": 7
+        "symbol_count": 2
       },
-      "path": "frontend/src/api.ts",
+      "path": "frontend/src/features/calender/circuitImageRegistry.js",
       "symbols": [
         {
           "kind": "function",
-          "line": 5,
-          "name": "request"
+          "line": 12,
+          "name": "getCircuitImageUrl"
         },
         {
           "kind": "function",
-          "line": 19,
-          "name": "serverHealth"
-        },
-        {
-          "kind": "function",
-          "line": 23,
-          "name": "startAnalysis"
-        },
-        {
-          "kind": "function",
-          "line": 27,
-          "name": "analysisStatus"
-        },
-        {
-          "kind": "function",
-          "line": 31,
-          "name": "analysisResults"
-        },
-        {
-          "kind": "function",
-          "line": 39,
-          "name": "cancelAnalysis"
-        },
-        {
-          "kind": "function",
-          "line": 43,
-          "name": "explainFinding"
+          "line": 18,
+          "name": "getCircuitImageMap"
         }
       ]
     },
     {
-      "content_hash": "45bf826c00e24448ca6c4a668ce64c241cbc79f0458d0039a799bc023611a188",
-      "language": "typescript",
+      "content_hash": "c0e15add517dd0be8f246033f45c8dcd721d1949b8499c468e256d7252feed8e",
+      "language": "javascript",
       "metrics": {
         "cycle_participation": 0,
         "dependency_depth": 1,
@@ -866,228 +1904,961 @@
         "fan_out": 1,
         "symbol_count": 1
       },
-      "path": "frontend/src/components/DependencyGraph.tsx",
+      "path": "frontend/src/features/calender/components/CalendarRaceCard.jsx",
       "symbols": [
         {
           "kind": "function",
-          "line": 11,
-          "name": "DependencyGraph"
+          "line": 18,
+          "name": "CalendarRaceCard"
         }
       ]
     },
     {
-      "content_hash": "6e9e5807fcbd48b75a96db5cbef36c996262196be42e6d4760dc86babbe61ad2",
-      "language": "typescript",
+      "content_hash": "2d38277098256ca3b4256858e82711722155cdc881d1aefd8c786368a6ec84d4",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 2,
+        "fan_in": 1,
+        "fan_out": 2,
+        "symbol_count": 0
+      },
+      "path": "frontend/src/features/calender/components/CalendarRaceDetail.jsx",
+      "symbols": []
+    },
+    {
+      "content_hash": "5fb4cb3821f53ca79a65bb63215bc662a40befa389c2716a82b3f9bc26ba9b55",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 2,
+        "fan_in": 1,
+        "fan_out": 1,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/features/calender/components/CalendarRaceList.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 5,
+          "name": "CalendarRaceList"
+        }
+      ]
+    },
+    {
+      "content_hash": "df230bff6f5663cc5131d75c1f6223074ea490faa62c2cad2d5af44efa16b14b",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 1,
+        "fan_in": 1,
+        "fan_out": 1,
+        "symbol_count": 5
+      },
+      "path": "frontend/src/features/calender/components/CircuitScene3D.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 6,
+          "name": "makeMaterial"
+        },
+        {
+          "kind": "function",
+          "line": 9,
+          "name": "supportsWebGL"
+        },
+        {
+          "kind": "function",
+          "line": 21,
+          "name": "CircuitScene3D"
+        },
+        {
+          "kind": "function",
+          "line": 112,
+          "name": "resize"
+        },
+        {
+          "kind": "function",
+          "line": 123,
+          "name": "render"
+        }
+      ]
+    },
+    {
+      "content_hash": "c9115dba03ce4f1c22a55e18fbe53480bd0b3833a59e5877401e0685818b4e3c",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 2
+      },
+      "path": "frontend/src/features/calender/components/TrackIntelCard.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 3,
+          "name": "formatMetric"
+        },
+        {
+          "kind": "function",
+          "line": 8,
+          "name": "TrackIntelCard"
+        }
+      ]
+    },
+    {
+      "content_hash": "492bce75b86b594a67171c10128dd2d01315e06cca31e7cf4b26cb08b93bfbf2",
+      "language": "javascript",
       "metrics": {
         "cycle_participation": 0,
         "dependency_depth": 2,
         "fan_in": 0,
         "fan_out": 1,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/features/calender/components/TrackMapCard.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 4,
+          "name": "TrackMapCard"
+        }
+      ]
+    },
+    {
+      "content_hash": "fad69b968eb835a9e7b06e65d69fac789b16d525c082cebe6122fe6a4ee237b2",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 2
+      },
+      "path": "frontend/src/features/docs/DocsPage.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 27,
+          "name": "ChapterLink"
+        },
+        {
+          "kind": "function",
+          "line": 36,
+          "name": "DocsPage"
+        }
+      ]
+    },
+    {
+      "content_hash": "791f5ceaa2b272c7d5734ea436a9cea96005b7909a639af16118689557944f55",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 1,
+        "fan_in": 1,
+        "fan_out": 1,
+        "symbol_count": 2
+      },
+      "path": "frontend/src/features/landing/LandingPage.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 71,
+          "name": "StoryCard"
+        },
+        {
+          "kind": "function",
+          "line": 118,
+          "name": "LandingPage"
+        }
+      ]
+    },
+    {
+      "content_hash": "25ff6c6f0d94f1c6f1d504c6338d7d7fc9901efda72a33bb82a7a597dd260c85",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 6
+      },
+      "path": "frontend/src/features/landing/SpeedTrace.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 29,
+          "name": "speedAt"
+        },
+        {
+          "kind": "function",
+          "line": 44,
+          "name": "toX"
+        },
+        {
+          "kind": "function",
+          "line": 45,
+          "name": "toY"
+        },
+        {
+          "kind": "function",
+          "line": 47,
+          "name": "buildPath"
+        },
+        {
+          "kind": "function",
+          "line": 58,
+          "name": "SpeedTrace"
+        },
+        {
+          "kind": "function",
+          "line": 82,
+          "name": "tick"
+        }
+      ]
+    },
+    {
+      "content_hash": "d1ee8845520546e2da08012863ccbe1ed7d75b6306695501088244b665e67ad3",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 1,
+        "fan_in": 1,
+        "fan_out": 1,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/features/lap-times/GapChart.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 13,
+          "name": "GapChart"
+        }
+      ]
+    },
+    {
+      "content_hash": "511b340d30a415b4bd76911719334ac64e2afbbe36b2ec8500a2823c794b187b",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 2,
+        "fan_in": 3,
+        "fan_out": 8,
         "symbol_count": 0
       },
-      "path": "frontend/src/main.tsx",
+      "path": "frontend/src/features/lap-times/LapTimeController.jsx",
       "symbols": []
     },
     {
-      "content_hash": "d186a1e35e4b920ba4f260f839d024ee291fb9b506526894a1e51125d77bfc12",
-      "language": "typescript",
+      "content_hash": "1c91526a4bdfb82d12c8992fd9bcdb9b66653412991a78d977bf188a0d609755",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 3,
+        "fan_in": 1,
+        "fan_out": 1,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/features/lap-times/LapTimesPage.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 4,
+          "name": "LapTimesPage"
+        }
+      ]
+    },
+    {
+      "content_hash": "8f0f7221d5fc8a4c152babc6c28afe8942538ce54f2c4f72206ac19df3873f86",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 1,
+        "fan_in": 1,
+        "fan_out": 1,
+        "symbol_count": 2
+      },
+      "path": "frontend/src/features/lap-times/PaceChart.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 14,
+          "name": "PaceChart"
+        },
+        {
+          "kind": "function",
+          "line": 165,
+          "name": "customDot"
+        }
+      ]
+    },
+    {
+      "content_hash": "7032af2c8da8ae9c328b3915eec1305fefc230a3d6040fafc72b48333afbe5d2",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 2,
+        "fan_out": 0,
+        "symbol_count": 0
+      },
+      "path": "frontend/src/features/lap-times/RaceAnalyticsDashboard.jsx",
+      "symbols": []
+    },
+    {
+      "content_hash": "eb4ba7fa38ab78da2e9e9c92e58d5fef4028b981ae4628a0b943a1b30512dede",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 0
+      },
+      "path": "frontend/src/features/lap-times/gap.worker.js",
+      "symbols": []
+    },
+    {
+      "content_hash": "cb14a45ed1d2b9f07a43b31e39a44507f6740958da0483c462604507f7189614",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/features/lap-times/pace.worker.js",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 3,
+          "name": "formatLapTime"
+        }
+      ]
+    },
+    {
+      "content_hash": "c0d522427685cace24b309ac885ad378c3ed88c12c6c66662b7f503f3b64ec45",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 2
+      },
+      "path": "frontend/src/features/lap-times/useWorkerizedData.js",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 8,
+          "name": "useWorkerizedData"
+        },
+        {
+          "kind": "function",
+          "line": 16,
+          "name": "handleMessage"
+        }
+      ]
+    },
+    {
+      "content_hash": "530c2594805f44b957f2fb81edfddeecf091490a90ba4301b07345cf18fe2bf4",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/features/live/GapRibbon.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 14,
+          "name": "GapRibbon"
+        }
+      ]
+    },
+    {
+      "content_hash": "2b35a6ff9c582dc075aafacfce855b7c811ad5d6e9893c88ce56ccbf3978ae5f",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 1,
+        "fan_in": 1,
+        "fan_out": 4,
+        "symbol_count": 5
+      },
+      "path": "frontend/src/features/live/LivePage.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 13,
+          "name": "FullLivePage"
+        },
+        {
+          "kind": "function",
+          "line": 45,
+          "name": "start"
+        },
+        {
+          "kind": "function",
+          "line": 63,
+          "name": "stop"
+        },
+        {
+          "kind": "function",
+          "line": 182,
+          "name": "DemoLivePage"
+        },
+        {
+          "kind": "function",
+          "line": 238,
+          "name": "LivePage"
+        }
+      ]
+    },
+    {
+      "content_hash": "94eb0f00ac5f43c6cec20755062143d8066283899708d8cddaeefa62b94084f5",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 3
+      },
+      "path": "frontend/src/features/live/TimingTower.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 4,
+          "name": "formatLapTime"
+        },
+        {
+          "kind": "function",
+          "line": 11,
+          "name": "lapFlag"
+        },
+        {
+          "kind": "function",
+          "line": 17,
+          "name": "TimingTower"
+        }
+      ]
+    },
+    {
+      "content_hash": "df30f9e9e6875fd07f645631714fa90a0f8e1a6beb1ce21750b38ea7ee4d576e",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 5
+      },
+      "path": "frontend/src/features/live/useDemoReplay.js",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 6,
+          "name": "makeState"
+        },
+        {
+          "kind": "function",
+          "line": 16,
+          "name": "applyEvent"
+        },
+        {
+          "kind": "function",
+          "line": 69,
+          "name": "standings"
+        },
+        {
+          "kind": "function",
+          "line": 99,
+          "name": "useDemoReplay"
+        },
+        {
+          "kind": "function",
+          "line": 144,
+          "name": "tick"
+        }
+      ]
+    },
+    {
+      "content_hash": "f922c5538a03c5c232216d9999c8703e79a0d01d952e3ca6c64b731f4ee5f767",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/features/live/useLiveStream.js",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 11,
+          "name": "useLiveStream"
+        }
+      ]
+    },
+    {
+      "content_hash": "404ed8f02cde7b256130bab19169ad0ab9091a912f58514e80d55fabd34c1f3c",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 1,
+        "fan_in": 1,
+        "fan_out": 2,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/features/race-control/RaceControlPage.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 7,
+          "name": "RaceControlPage"
+        }
+      ]
+    },
+    {
+      "content_hash": "f0fbec61bd8f6b7c7ad4391c537f2d07b8e651ff76da2ea4e1be3a211e622f4b",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 3,
+        "fan_in": 1,
+        "fan_out": 1,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/features/strategy/StrategyPage.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 4,
+          "name": "StrategyPage"
+        }
+      ]
+    },
+    {
+      "content_hash": "2eadf8d03438e285f6c96e4610e851d84ca199287a1e3ecbacee22f84b1df538",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 3,
+        "fan_in": 1,
+        "fan_out": 1,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/features/technical/TechnicalPage.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 4,
+          "name": "TechnicalPage"
+        }
+      ]
+    },
+    {
+      "content_hash": "8b064eee53565f9efc2d79278d0da287634a2ec362f212f9fd244d3b9df6152e",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 1,
+        "fan_out": 0,
+        "symbol_count": 4
+      },
+      "path": "frontend/src/features/telemetry/LapTireMatrixPanel.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 5,
+          "name": "compoundBadgeClass"
+        },
+        {
+          "kind": "function",
+          "line": 18,
+          "name": "abbrevCompound"
+        },
+        {
+          "kind": "function",
+          "line": 32,
+          "name": "LapTireMatrixPanel"
+        },
+        {
+          "kind": "function",
+          "line": 59,
+          "name": "buildMap"
+        }
+      ]
+    },
+    {
+      "content_hash": "e9db5ddc7cb992fcdaac4bc47dffc57c4524c2eaf24f51da8dd762e216a0cf29",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 1,
+        "fan_in": 1,
+        "fan_out": 2,
+        "symbol_count": 8
+      },
+      "path": "frontend/src/features/telemetry/TelemetryPage.jsx",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 45,
+          "name": "formatLapTime"
+        },
+        {
+          "kind": "function",
+          "line": 52,
+          "name": "linInterp"
+        },
+        {
+          "kind": "function",
+          "line": 62,
+          "name": "buildAlignedRows"
+        },
+        {
+          "kind": "function",
+          "line": 91,
+          "name": "TrackMap"
+        },
+        {
+          "kind": "function",
+          "line": 184,
+          "name": "TelemetryPage"
+        },
+        {
+          "kind": "function",
+          "line": 226,
+          "name": "handleTelemetryDriverToggle"
+        },
+        {
+          "kind": "function",
+          "line": 236,
+          "name": "handleTelemetryDriverClear"
+        },
+        {
+          "kind": "function",
+          "line": 287,
+          "name": "handlePickLapFromMatrix"
+        }
+      ]
+    },
+    {
+      "content_hash": "22599abf46c62001330d20c0c6a18a553d706dea7f78c8772bbf2ca6f8e0883d",
+      "language": "javascript",
       "metrics": {
         "cycle_participation": 0,
         "dependency_depth": 0,
         "fan_in": 3,
         "fan_out": 0,
+        "symbol_count": 8
+      },
+      "path": "frontend/src/hooks/useRaceData.js",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 9,
+          "name": "useRaceMeta"
+        },
+        {
+          "kind": "function",
+          "line": 22,
+          "name": "useDriverTelemetry"
+        },
+        {
+          "kind": "function",
+          "line": 41,
+          "name": "useRaceAnalytics"
+        },
+        {
+          "kind": "function",
+          "line": 53,
+          "name": "useRaceCalendar"
+        },
+        {
+          "kind": "function",
+          "line": 65,
+          "name": "useRaceTrackIntel"
+        },
+        {
+          "kind": "function",
+          "line": 78,
+          "name": "useLapTireMatrix"
+        },
+        {
+          "kind": "function",
+          "line": 96,
+          "name": "usePaceEvolution"
+        },
+        {
+          "kind": "function",
+          "line": 113,
+          "name": "useLapCompareTelemetry"
+        }
+      ]
+    },
+    {
+      "content_hash": "7fd295a5a9610272e2dcd0c2f2390e5aa098fa5eb563eff8f5bc45c3a5a44284",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
         "symbol_count": 0
       },
-      "path": "frontend/src/types.ts",
+      "path": "frontend/src/lib/api.js",
       "symbols": []
     },
     {
-      "content_hash": "b970412b4dfefed3e2db3275f56923fe8c38e711201f859848b142f086f53609",
+      "content_hash": "d1f1e0d62cb8d8d1e04c26e14de842d8a151f75812d81b046c65b5d1fe8e4b27",
       "language": "typescript",
       "metrics": {
         "cycle_participation": 0,
         "dependency_depth": 0,
         "fan_in": 0,
         "fan_out": 0,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/lib/utils.ts",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 4,
+          "name": "cn"
+        }
+      ]
+    },
+    {
+      "content_hash": "e362cefa4aad5e8db199c2ea3f9e1f8bdfcc28ef745d22c0788309b37f9e8d3a",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 5,
+        "fan_in": 0,
+        "fan_out": 1,
         "symbol_count": 0
       },
-      "path": "frontend/vite.config.ts",
+      "path": "frontend/src/main.jsx",
       "symbols": []
     },
     {
-      "content_hash": "683485ac9d48a176c587d9d90897e582c10115e88bdb6c449ad2ba4edf2bab95",
+      "content_hash": "2213d243c2b123a18874e6bf55b4bbb0e8657571d9b2fe1caed126d9216e8236",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 2,
+        "fan_out": 0,
+        "symbol_count": 1
+      },
+      "path": "frontend/src/theme/f1colors.js",
+      "symbols": [
+        {
+          "kind": "function",
+          "line": 41,
+          "name": "getDriverColor"
+        }
+      ]
+    },
+    {
+      "content_hash": "312585d543df654837e2af43e44fc96bfb29e9a2cf2fd52d1a29745ba1c32922",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 0
+      },
+      "path": "frontend/tailwind.config.js",
+      "symbols": []
+    },
+    {
+      "content_hash": "1d6b4d44bb9b28792be9090de84a60f2928409a97b6fe40528d7bfc6b4ff6bc9",
+      "language": "javascript",
+      "metrics": {
+        "cycle_participation": 0,
+        "dependency_depth": 0,
+        "fan_in": 0,
+        "fan_out": 0,
+        "symbol_count": 0
+      },
+      "path": "frontend/vite.config.js",
+      "symbols": []
+    },
+    {
+      "content_hash": "c5901f1e9d56e1da54b76cde3ced3b57a4d50b26919320040834afe5a9b7e68d",
       "language": "python",
       "metrics": {
         "cycle_participation": 0,
         "dependency_depth": 0,
         "fan_in": 0,
         "fan_out": 0,
-        "symbol_count": 2
+        "symbol_count": 10
       },
-      "path": "tests/test_api.py",
+      "path": "scripts/build_demo_bundle.py",
       "symbols": [
         {
-          "kind": "class",
-          "line": 13,
-          "name": "ApiTests"
+          "kind": "function",
+          "line": 39,
+          "name": "slug"
         },
         {
           "kind": "function",
-          "line": 14,
-          "name": "test_versioned_job_api_and_root_confinement"
+          "line": 43,
+          "name": "json_safe"
+        },
+        {
+          "kind": "function",
+          "line": 62,
+          "name": "completed_races"
+        },
+        {
+          "kind": "function",
+          "line": 75,
+          "name": "scheduled_events"
+        },
+        {
+          "kind": "function",
+          "line": 80,
+          "name": "validate_race"
+        },
+        {
+          "kind": "function",
+          "line": 100,
+          "name": "write_compressed"
+        },
+        {
+          "kind": "function",
+          "line": 105,
+          "name": "build_telemetry"
+        },
+        {
+          "kind": "function",
+          "line": 143,
+          "name": "build_bundle"
+        },
+        {
+          "kind": "function",
+          "line": 215,
+          "name": "refresh_calendar"
+        },
+        {
+          "kind": "function",
+          "line": 232,
+          "name": "main"
         }
       ]
     },
     {
-      "content_hash": "4811f24c1739f60f8b4776fc6c02db913b5f4ee2e95de1a95fdefab83ced8e43",
+      "content_hash": "dcca4260845db5875ddba38a18781d414b3baa92828f21419bd61d648c8e286d",
       "language": "python",
       "metrics": {
         "cycle_participation": 0,
-        "dependency_depth": 3,
+        "dependency_depth": 0,
         "fan_in": 0,
-        "fan_out": 1,
-        "symbol_count": 2
+        "fan_out": 0,
+        "symbol_count": 15
       },
-      "path": "tests/test_cli.py",
+      "path": "scripts/prewarm.py",
       "symbols": [
         {
           "kind": "class",
-          "line": 11,
-          "name": "CliTests"
+          "line": 64,
+          "name": "ValidationError"
         },
         {
           "kind": "function",
-          "line": 12,
-          "name": "test_baseline_gate_fails_only_for_new_fingerprints"
-        }
-      ]
-    },
-    {
-      "content_hash": "37af1251f396509edf025174b06ca9b02e304ac713e36447b7070514841c8e3b",
-      "language": "python",
-      "metrics": {
-        "cycle_participation": 0,
-        "dependency_depth": 2,
-        "fan_in": 0,
-        "fan_out": 2,
-        "symbol_count": 8
-      },
-      "path": "tests/test_engine.py",
-      "symbols": [
-        {
-          "kind": "class",
-          "line": 11,
-          "name": "EngineTests"
+          "line": 77,
+          "name": "_check_analytics"
         },
         {
           "kind": "function",
-          "line": 12,
-          "name": "test_python_resolution_cycles_and_isolated_files"
+          "line": 103,
+          "name": "_check_nonempty"
         },
         {
           "kind": "function",
-          "line": 30,
-          "name": "test_js_ts_tsx_and_tsconfig_aliases"
+          "line": 108,
+          "name": "_check_track_intel"
         },
         {
           "kind": "function",
-          "line": 45,
-          "name": "test_ambiguous_import_never_creates_guessed_edges"
+          "line": 130,
+          "name": "_check_insights"
         },
         {
           "kind": "function",
-          "line": 59,
-          "name": "test_nested_dependency_and_build_directories_are_pruned"
+          "line": 138,
+          "name": "key_to_filename"
         },
         {
           "kind": "function",
-          "line": 68,
-          "name": "test_tarjan_returns_every_cycle"
+          "line": 148,
+          "name": "filename_to_key"
         },
         {
           "kind": "function",
-          "line": 69,
-          "name": "edge"
+          "line": 152,
+          "name": "write_payload"
         },
         {
           "kind": "function",
-          "line": 78,
-          "name": "write"
-        }
-      ]
-    },
-    {
-      "content_hash": "1c44b93bd088de5fe60a53f1cf99c9fc102515c23185bc76f16b335aafb3ea23",
-      "language": "python",
-      "metrics": {
-        "cycle_participation": 0,
-        "dependency_depth": 2,
-        "fan_in": 0,
-        "fan_out": 3,
-        "symbol_count": 5
-      },
-      "path": "tests/test_governance_and_reports.py",
-      "symbols": [
-        {
-          "kind": "class",
-          "line": 13,
-          "name": "GovernanceAndReportTests"
+          "line": 164,
+          "name": "season_jobs"
         },
         {
           "kind": "function",
-          "line": 14,
-          "name": "test_governance_suppression_and_explicit_metrics"
+          "line": 169,
+          "name": "build_schedule"
         },
         {
           "kind": "function",
-          "line": 45,
-          "name": "test_dependency_allow_list_denies_unlisted_layer_edges"
+          "line": 177,
+          "name": "race_jobs"
         },
         {
           "kind": "function",
-          "line": 71,
-          "name": "test_json_sarif_html_and_baseline_fingerprints"
+          "line": 204,
+          "name": "completed_rounds"
         },
         {
           "kind": "function",
-          "line": 85,
-          "name": "write"
-        }
-      ]
-    },
-    {
-      "content_hash": "d5059449112cef1bec6135e30d4b6b89a45ac89d09072295f033bffe01e172c0",
-      "language": "python",
-      "metrics": {
-        "cycle_participation": 0,
-        "dependency_depth": 1,
-        "fan_in": 0,
-        "fan_out": 1,
-        "symbol_count": 2
-      },
-      "path": "tests/test_storage.py",
-      "symbols": [
-        {
-          "kind": "class",
-          "line": 10,
-          "name": "StorageTests"
+          "line": 221,
+          "name": "select_rounds"
         },
         {
           "kind": "function",
-          "line": 11,
-          "name": "test_job_lifecycle_and_source_is_not_required"
+          "line": 244,
+          "name": "run_job"
+        },
+        {
+          "kind": "function",
+          "line": 262,
+          "name": "main"
         }
       ]
     }
   ],
   "findings": [],
-  "root": "/Users/kshitijmishra/Architect-CLI",
+  "root": "/Users/kshitijmishra/Purple_Sector",
   "schema_version": "1.0",
   "summary": {
     "cycles": 0,
-    "dependencies": 26,
-    "external": 107,
-    "files": 23,
+    "dependencies": 58,
+    "external": 228,
+    "files": 72,
     "findings": 0,
     "suppressed": 0,
     "unresolved": 0
