@@ -5,10 +5,13 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from architect.cli import main
+from architect.cli import build_parser, main
 
 
 class CliTests(unittest.TestCase):
+    def test_vinyas_is_the_primary_cli_name(self) -> None:
+        self.assertEqual("vinyas", build_parser().prog)
+
     def test_baseline_gate_fails_only_for_new_fingerprints(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
