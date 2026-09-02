@@ -20,7 +20,7 @@ class GovernanceAndReportTests(unittest.TestCase):
             root = Path(directory)
             self.write(root, "api/handler.py", "from core import domain\n")
             self.write(root, "core/domain.py", "VALUE = 1\n")
-            self.write(root, "architect.yaml", """
+            self.write(root, "vinyas.yaml", """
 layers:
   - name: api
     match: ["api/**"]
@@ -53,7 +53,7 @@ suppressions:
             self.write(root, "core/domain.py", "VALUE = 1\n")
             self.write(
                 root,
-                "architect.yaml",
+                "vinyas.yaml",
                 """
 layers:
   - { name: api, match: ["api/**"] }
@@ -75,7 +75,8 @@ thresholds: { cross_boundary: 5 }
             graph = analyze_repository(root)
             sarif = json.loads(sarif_report(graph))
             self.assertEqual("2.1.0", sarif["version"])
-            self.assertIn("Architect Pro", html_report(graph))
+            self.assertEqual("Vinyas", sarif["runs"][0]["tool"]["driver"]["name"])
+            self.assertIn("Vinyas", html_report(graph))
             current = active_fingerprints(graph)
             payload = graph.to_dict()
             payload["findings"] = []
