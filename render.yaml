@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: vinyas-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile.backend
+    dockerContext: .
+    healthCheckPath: /api/v1/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: VINYAS_ROOT
+        value: /app
+      - key: VINYAS_DATA_DIR
+        value: /tmp/vinyas
+      - key: VINYAS_MAX_JOBS
+        value: "1"
+      - key: VINYAS_CORS_ORIGINS
+        value: http://127.0.0.1:5173,http://localhost:5173,https://vinyas.pages.dev
+      - key: VINYAS_OLLAMA_ENABLED
+        value: "false"

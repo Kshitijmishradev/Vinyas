@@ -40,9 +40,17 @@ class ExplanationRequest(BaseModel):
 
 
 app = FastAPI(title="Vinyas API", version="1.0.0")
+CORS_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get(
+        "VINYAS_CORS_ORIGINS",
+        "http://127.0.0.1:5173,http://localhost:5173",
+    ).split(",")
+    if origin.strip()
+]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
+    allow_origins=CORS_ORIGINS,
     allow_credentials=False,
     allow_methods=["GET", "POST", "DELETE"],
     allow_headers=["Content-Type"],

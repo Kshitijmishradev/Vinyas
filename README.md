@@ -46,6 +46,12 @@ docker compose up --build
 
 The Docker stack is available at `http://127.0.0.1:5173`. It mounts only the current repository as read-only and stores analysis metadata in a dedicated volume.
 
+### Render backend
+
+The repository includes a `render.yaml` Blueprint for a free Docker web service. Render binds the API to its assigned `PORT`, checks `/api/v1/health`, limits the free instance to one analysis worker, and stores temporary SQLite state under `/tmp/vinyas`.
+
+The free service filesystem is ephemeral, so completed analysis jobs disappear when Render restarts or spins down the instance. Add the deployed frontend origin to `VINYAS_CORS_ORIGINS` as a comma-separated URL when using a custom frontend domain.
+
 To analyze another repository without editing Compose, set `VINYAS_REPO` to its absolute path:
 
 ```bash
