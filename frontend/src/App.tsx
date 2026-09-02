@@ -3,10 +3,11 @@ import './App.css'
 import { analysisResults, analysisStatus, cancelAnalysis, explainFinding, serverHealth, startAnalysis } from './api'
 import { DependencyGraph } from './components/DependencyGraph'
 import type { FileNode, Finding, Graph, Job } from './types'
+import { LandingPage } from './LandingPage'
 
 type Tab = 'overview' | 'findings' | 'files' | 'graph'
 
-function App() {
+function AnalyzerApp() {
   const [root, setRoot] = useState('Connecting…')
   const [job, setJob] = useState<Job | null>(null)
   const [graph, setGraph] = useState<Graph | null>(null)
@@ -143,5 +144,9 @@ function EvidencePanel({ finding, explanation, onExplain }: { finding: Finding |
 function FileTable({ files, onSelect, selected }: { files: FileNode[]; onSelect: (path: string) => void; selected?: string | null }) { return <div className="table-scroll"><table><thead><tr><th>File</th><th>Language</th><th>Fan-in</th><th>Fan-out</th><th>Symbols</th><th>Depth</th><th>Cycles</th></tr></thead><tbody>{files.map((file) => <tr key={file.path} className={selected === file.path ? 'selected' : ''} onClick={() => onSelect(file.path)}><td><code>{file.path}</code></td><td>{file.language}</td><td>{file.metrics.fan_in}</td><td>{file.metrics.fan_out}</td><td>{file.metrics.symbol_count}</td><td>{file.metrics.dependency_depth}</td><td>{file.metrics.cycle_participation}</td></tr>)}</tbody></table></div> }
 
 function FilePanel({ file, edges }: { file: FileNode | null; edges: Graph['edges'] }) { return <aside className="panel inspector"><p className="eyebrow">FILE DETAILS</p>{file ? <><h2>{file.path}</h2><p className="muted">{file.language} · {file.symbols.length} symbols</p><dl><dt>Incoming / outgoing</dt><dd>{file.metrics.fan_in} / {file.metrics.fan_out}</dd><dt>Dependency depth</dt><dd>{file.metrics.dependency_depth}</dd><dt>Cycle participation</dt><dd>{file.metrics.cycle_participation}</dd></dl><h3>Connections</h3><ul className="connections">{edges.slice(0, 20).map((edge) => <li key={`${edge.source}:${edge.line}:${edge.target}`}><span>{edge.source === file.path ? 'OUT' : 'IN'}</span><code>{edge.source === file.path ? edge.target : edge.source}</code><small>{edge.evidence}</small></li>)}</ul></> : <p className="muted">Select a file from the table or graph to inspect incoming and outgoing dependencies.</p>}</aside> }
+
+function App() {
+  return window.location.pathname.startsWith('/app') ? <AnalyzerApp /> : <LandingPage />
+}
 
 export default App
