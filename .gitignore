@@ -5,3 +5,10 @@ __pycache__/
 *.pyd
 .architect_cache.json
 .architect_analysis_store.json
+.architect/
+*.sarif
+architect-report.html
+.coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
