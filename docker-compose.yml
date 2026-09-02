@@ -1,3 +1,5 @@
+name: vinyas
+
 services:
   backend:
     build:
@@ -5,12 +7,12 @@ services:
       dockerfile: Dockerfile.backend
     expose: ["8000"]
     volumes:
-      - ${ARCHITECT_REPO:-.}:/workspace:ro
-      - architect-data:/data
+      - ${VINYAS_REPO:-${ARCHITECT_REPO:-.}}:/workspace:ro
+      - vinyas-data:/data
     environment:
-      ARCHITECT_ROOT: /workspace
-      ARCHITECT_DATA_DIR: /data
-      ARCHITECT_MAX_JOBS: "2"
+      VINYAS_ROOT: /workspace
+      VINYAS_DATA_DIR: /data
+      VINYAS_MAX_JOBS: "2"
     read_only: true
     tmpfs: [/tmp]
     security_opt: ["no-new-privileges:true"]
@@ -23,4 +25,4 @@ services:
     depends_on: [backend]
 
 volumes:
-  architect-data:
+  vinyas-data:
