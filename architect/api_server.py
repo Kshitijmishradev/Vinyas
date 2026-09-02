@@ -13,10 +13,22 @@ from architect.engine import AnalysisCancelled, analyze_repository
 from architect.explanations import explain_finding
 from architect.storage import AnalysisStore
 
-ALLOWED_ROOT = Path(os.environ.get("ARCHITECT_ROOT", os.getcwd())).expanduser().resolve()
-DATA_DIR = Path(os.environ.get("ARCHITECT_DATA_DIR", ALLOWED_ROOT / ".architect"))
+ALLOWED_ROOT = Path(
+    os.environ.get("VINYAS_ROOT", os.environ.get("ARCHITECT_ROOT", os.getcwd()))
+).expanduser().resolve()
+DATA_DIR = Path(
+    os.environ.get(
+        "VINYAS_DATA_DIR",
+        os.environ.get("ARCHITECT_DATA_DIR", ALLOWED_ROOT / ".vinyas"),
+    )
+)
 STORE = AnalysisStore(DATA_DIR / "analyses.sqlite3")
-EXECUTOR = ThreadPoolExecutor(max_workers=max(1, int(os.environ.get("ARCHITECT_MAX_JOBS", "2"))))
+EXECUTOR = ThreadPoolExecutor(
+    max_workers=max(
+        1,
+        int(os.environ.get("VINYAS_MAX_JOBS", os.environ.get("ARCHITECT_MAX_JOBS", "2"))),
+    )
+)
 
 
 class CreateAnalysisRequest(BaseModel):
@@ -27,7 +39,7 @@ class ExplanationRequest(BaseModel):
     finding_fingerprint: str
 
 
-app = FastAPI(title="Architect Pro API", version="1.0.0")
+app = FastAPI(title="Vinyas API", version="1.0.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
