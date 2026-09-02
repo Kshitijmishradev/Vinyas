@@ -9,15 +9,25 @@ def explain_finding(finding: dict[str, Any]) -> tuple[str, bool]:
         f"{finding['message']} Evidence: {finding.get('evidence') or 'repository-level rule'}. "
         "Review the referenced dependency and either correct it or add a documented, time-bounded suppression."
     )
-    if os.environ.get("ARCHITECT_OLLAMA_ENABLED", "false").lower() != "true":
+    enabled = os.environ.get(
+        "VINYAS_OLLAMA_ENABLED",
+        os.environ.get("ARCHITECT_OLLAMA_ENABLED", "false"),
+    )
+    if enabled.lower() != "true":
         return deterministic, False
     try:
         import requests
 
         response = requests.post(
-            os.environ.get("ARCHITECT_OLLAMA_URL", "http://127.0.0.1:11434/api/generate"),
+            os.environ.get(
+                "VINYAS_OLLAMA_URL",
+                os.environ.get("ARCHITECT_OLLAMA_URL", "http://127.0.0.1:11434/api/generate"),
+            ),
             json={
-                "model": os.environ.get("ARCHITECT_OLLAMA_MODEL", "qwen2.5-coder:7b"),
+                "model": os.environ.get(
+                    "VINYAS_OLLAMA_MODEL",
+                    os.environ.get("ARCHITECT_OLLAMA_MODEL", "qwen2.5-coder:7b"),
+                ),
                 "stream": False,
                 "prompt": (
                     "Explain this verified architecture finding in 2-3 concise sentences. Do not invent facts.\n"
