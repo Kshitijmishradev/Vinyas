@@ -1,150 +1,154 @@
-# Architect CLI v4
+# Architect Pro
 
-<p align="center">
-  <strong>Interactive architecture mapping for real codebases.</strong><br/>
-  Scan repositories, infer dependency relationships, and explore the graph in a modern React UI.
-</p>
+Deterministic architecture analysis and baseline-aware CI governance for Python and JavaScript/TypeScript repositories.
 
-🔗 [Project page](https://kshitijmishradev.github.io/Architech_CLI/)
+Architect Pro builds an evidence-backed dependency graph, finds architecture violations, and helps teams prevent new structural debt without forcing them to fix every legacy issue first. Local AI is optional and can explain findings, but it never creates findings or changes CI outcomes.
 
-<p align="center">
-  <img alt="Python" src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white" />
-  <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-API-009688?logo=fastapi&logoColor=white" />
-  <img alt="React" src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=111" />
-  <img alt="Vite" src="https://img.shields.io/badge/Vite-Frontend-646CFF?logo=vite&logoColor=white" />
-</p>
+## What it does
 
-## Why Architect CLI
+- Resolves Python packages, namespace-style packages, and relative imports.
+- Resolves JS, JSX, TS, and TSX relative imports, index modules, and `tsconfig` path aliases.
+- Keeps isolated files and reports ambiguous imports instead of guessing.
+- Detects every dependency cycle and calculates explicit fan-in, fan-out, symbol count, dependency depth, and cycle-participation metrics.
+- Enforces layer boundaries and configurable budgets through `architect.yaml`.
+- Produces JSON, standalone HTML, and SARIF reports.
+- Compares against a Git ref or saved report and fails only for newly introduced findings.
+- Provides a repository-restricted local explorer with progress, cancellation, tables, graph navigation, evidence, and optional Ollama explanations.
 
-- Understand large codebases quickly with dependency-focused architecture views.
-- Analyze with or without LLM labels (`hints` mode is very fast and deterministic).
-- Navigate results in an interactive frontend (search, filtering, focused exploration).
-- Keep results reusable with persisted analysis and label cache files.
+## Five-minute start
 
-## Architecture
-
-- Backend: FastAPI (`architect/api_server.py`)
-- Analyzer core: scanner + dependency resolution + optional LLM labeling (`architect/analysis_core.py`)
-- Frontend: React + Vite + Sigma.js graph rendering (`frontend/`)
-
-## Quick Start
-
-### 1. Install dependencies
+Requires Python 3.10+ and, for the web explorer, Node 20+.
 
 ```bash
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-cd frontend && npm install && cd ..
+python -m venv .venv
+source .venv/bin/activate
+pip install -e '.[dev]'
+
+architect analyze . --output analysis.json
+architect report . --format html --output architect-report.html
+architect check . --baseline main --sarif architect.sarif
 ```
 
-### 2. Start full local stack
+Start the local explorer:
 
 ```bash
-make dev
+architect serve .
+cd frontend && npm ci && npm run dev
 ```
 
-Services:
+Open `http://127.0.0.1:5173`. The API accepts only the repository passed to `architect serve`; the browser cannot request arbitrary host paths.
 
-- Backend: `http://127.0.0.1:8000`
-- Frontend: `http://127.0.0.1:5173`
-
-## API Usage
-
-### Health check
-
-```bash
-curl -s http://127.0.0.1:8000/api/health
-```
-
-### Analyze any repository
-
-```bash
-curl -s -X POST http://127.0.0.1:8000/api/analyze \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "path": "/absolute/path/to/repo",
-    "no_llm": true,
-    "label_mode": "hints",
-    "max_edges": 200
-  }'
-```
-
-Useful endpoints:
-
-- `GET /api/health`
-- `POST /api/analyze`
-- `POST /api/path-explanation`
-- `POST /api/risk-analysis`
-- `POST /api/search`
-
-## Tinygrad Example
-
-This project has already been exercised against the `tinygrad` codebase and works well on large dependency graphs.
-
-Suggested request for Tinygrad:
-
-```bash
-curl -s -X POST http://127.0.0.1:8000/api/analyze \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "path": "/Users/kshitijmishra/tinygrad",
-    "no_llm": false,
-    "label_mode": "hybrid",
-    "max_edges": 0
-  }'
-```
-
-### Tinygrad UI snapshots
-
-<p>
-  <img src="img/Screenshot 2026-03-07 at 11.20.14 PM.png" alt="Tinygrad architecture view 1" width="49%" />
-  <img src="img/Screenshot 2026-03-07 at 11.21.11 PM.png" alt="Tinygrad architecture view 2" width="49%" />
-</p>
-<p>
-  <img src="img/Screenshot 2026-03-07 at 11.21.56 PM.png" alt="Tinygrad architecture view 3" width="49%" />
-  <img src="img/Screenshot 2026-03-07 at 11.22.01 PM.png" alt="Tinygrad architecture view 4" width="49%" />
-</p>
-
-## LLM Labels (Optional)
-
-To enable semantic relationship labels, run Ollama locally:
-
-```bash
-ollama serve
-ollama pull qwen2.5-coder:7b
-```
-
-Then send analyze requests with `"no_llm": false` and optionally set `"model"`.
-
-## Persistence
-
-- Analysis store: `.architect_analysis_store.json`
-- LLM label cache: `.architect_cache.json`
-
-## Dev Commands
-
-### Backend only
-
-```bash
-venv/bin/python -m uvicorn architect.api_server:app --host 127.0.0.1 --port 8000
-```
-
-### Frontend only
-
-```bash
-cd frontend
-npm run dev -- --host 127.0.0.1 --port 5173
-```
-
-### Tests
-
-```bash
-venv/bin/python -m unittest discover -s tests -p 'test_*.py' -v
-```
-
-### Docker
+Alternatively:
 
 ```bash
 docker compose up --build
 ```
+
+The Docker stack is available at `http://127.0.0.1:5173`. It mounts only the current repository as read-only and stores analysis metadata in a dedicated volume.
+
+## CLI
+
+```text
+architect analyze PATH [--config FILE] [--output FILE]
+architect report PATH --format html|json|sarif --output FILE
+architect check PATH --baseline GIT_REF_OR_JSON [--sarif FILE] [--html FILE]
+architect serve PATH [--host 127.0.0.1] [--port 8000]
+```
+
+`architect check` exits with status 1 only when the current repository contains active finding fingerprints absent from the baseline. The Git ref must be available locally; CI should use a full checkout or fetch the base ref.
+
+## Governance configuration
+
+Copy `architect.example.yaml` to `architect.yaml` and adapt it:
+
+```yaml
+include: ["src/**/*", "packages/**/*"]
+exclude: ["**/*.generated.ts", "**/fixtures/**"]
+
+layers:
+  - name: presentation
+    match: ["src/web/**"]
+  - name: domain
+    match: ["src/domain/**"]
+
+forbidden_dependencies:
+  - from: domain
+    to: presentation
+
+# Optional allow-list mode: when present, unlisted cross-layer edges are denied.
+allowed_dependencies:
+  - from: presentation
+    to: domain
+
+thresholds:
+  cycles: 0
+  fan_out: 20
+  unresolved_imports: 0
+  cross_boundary: 20
+
+suppressions:
+  - rule: forbidden-dependency
+    path: "src/legacy/**"
+    reason: "Migration tracked in issue #123"
+    expires: 2026-12-31
+```
+
+Expired suppressions stop applying automatically. Every suppression requires a reason.
+
+## API v1
+
+- `POST /api/v1/analyses` — queue a scan within the configured repository root.
+- `GET /api/v1/analyses/{id}` — read status, progress, and summary.
+- `GET /api/v1/analyses/{id}/findings` — read deterministic findings and evidence.
+- `GET /api/v1/analyses/{id}/graph` — read files, edges, metrics, and cycles.
+- `POST /api/v1/analyses/{id}/explanations` — explain one verified finding.
+- `DELETE /api/v1/analyses/{id}` — cancel a running scan or delete a completed result.
+
+Analyses are stored in `.architect/analyses.sqlite3`. Full source files are not persisted; results contain paths, hashes, metrics, dependency evidence excerpts, and findings.
+
+## Optional local AI
+
+AI is disabled by default. Enable Ollama explanations only when desired:
+
+```bash
+export ARCHITECT_OLLAMA_ENABLED=true
+export ARCHITECT_OLLAMA_MODEL=qwen2.5-coder:7b
+architect serve .
+```
+
+Explanations receive only the selected deterministic finding and its evidence excerpt. If Ollama is unavailable, the API returns a deterministic explanation and marks it as non-AI.
+
+## CI
+
+The included `.github/workflows/architect.yml` runs backend checks, frontend checks, Docker builds, baseline-aware governance, SARIF upload, and an HTML report artifact. Ensure the workflow fetches the pull request base ref.
+
+```bash
+architect check . \
+  --baseline "$BASE_SHA" \
+  --sarif architect.sarif \
+  --html architect-report.html
+```
+
+## Development and verification
+
+```bash
+pip install -e '.[dev]'
+pytest
+ruff check architect tests
+mypy architect
+
+cd frontend
+npm ci
+npm run lint
+npm run build
+```
+
+The correctness suite covers relative Python imports, TSX and aliases, isolated files, ambiguous resolution, multiple cycles, governance suppressions, reports, baseline fingerprints, and SQLite lifecycle behavior.
+
+## Security model and limitations
+
+- Run the API on loopback unless you add authentication and a trusted reverse proxy.
+- The server is restricted to `ARCHITECT_ROOT`; Docker mounts only that repository.
+- Import analysis is static. Dynamic Python imports, runtime module loaders, framework-generated dependencies, and arbitrary bundler plugins may require future adapters.
+- Java, Go, Rust, and C/C++ are not part of the reliable v1 analyzer. New languages should implement the analyzer/resolver boundary without weakening resolution confidence.
+- AI output is advisory and never used for severity, rule evaluation, baselines, or exit codes.
