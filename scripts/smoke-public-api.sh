@@ -8,12 +8,12 @@ created="$(curl --fail --silent --show-error \
   --header 'Content-Type: application/json' \
   --data "{\"repository_url\":\"${repository_url}\"}" \
   "${api_url}/api/v1/analyses")"
-analysis_id="$(printf '%s' "$created" | python -c 'import json,sys; print(json.load(sys.stdin)["id"])')"
+analysis_id="$(printf '%s' "$created" | python3 -c 'import json,sys; print(json.load(sys.stdin)["id"])')"
 
 attempt=0
 while [ "$attempt" -lt 120 ]; do
   status_payload="$(curl --fail --silent --show-error "${api_url}/api/v1/analyses/${analysis_id}")"
-  job_status="$(printf '%s' "$status_payload" | python -c 'import json,sys; print(json.load(sys.stdin)["status"])')"
+  job_status="$(printf '%s' "$status_payload" | python3 -c 'import json,sys; print(json.load(sys.stdin)["status"])')"
   case "$job_status" in
     complete)
       curl --fail --silent --show-error "${api_url}/api/v1/analyses/${analysis_id}/graph" >/dev/null
