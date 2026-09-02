@@ -252,7 +252,7 @@ h3 {
 
 .tabs button.active {
   color: var(--color-text);
-  background: var(--color-surface-3);
+  background: var(--color-accent-deep);
   box-shadow: inset 0 0 0 1px var(--color-border-strong);
 }
 
@@ -433,7 +433,7 @@ main {
 
 .finding-row.selected {
   border-color: var(--color-border-strong);
-  background: var(--color-surface-3);
+  background: var(--color-accent-deep);
   box-shadow: inset 2px 0 0 var(--color-primary);
 }
 
@@ -554,7 +554,7 @@ tbody tr:hover {
 }
 
 tbody tr.selected {
-  background: var(--color-surface-3);
+  background: var(--color-accent-deep);
   box-shadow: inset 2px 0 0 var(--color-primary);
 }
 
@@ -665,9 +665,162 @@ dd {
   min-height: 620px;
 }
 
+.graph-toolbar {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 20px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.graph-legend,
+.graph-navigation,
+.graph-zoom-controls {
+  display: flex;
+  align-items: center;
+}
+
+.graph-legend {
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.graph-navigation {
+  margin-left: auto;
+  gap: 12px;
+}
+
+.graph-gesture-hint {
+  color: var(--color-text-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+}
+
+.graph-zoom-controls {
+  overflow: hidden;
+  border: 1px solid var(--color-border-control);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-2);
+}
+
+.graph-zoom-controls button,
+.graph-zoom-controls output {
+  display: grid;
+  min-width: 32px;
+  height: 30px;
+  padding: 0 8px;
+  place-items: center;
+  border: 0;
+  border-right: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.graph-zoom-controls button {
+  cursor: pointer;
+}
+
+.graph-zoom-controls button:hover:not(:disabled) {
+  color: var(--color-text);
+  background: var(--color-surface-hover);
+}
+
+.graph-zoom-controls button:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.graph-zoom-controls output {
+  min-width: 52px;
+  font-variant-numeric: tabular-nums;
+}
+
+.graph-zoom-controls .reset {
+  min-width: 50px;
+  border-right: 0;
+}
+
+.graph-legend-title {
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-weight: 650;
+}
+
+.graph-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.graph-legend-item strong {
+  color: var(--color-text-subtle);
+  font-variant-numeric: tabular-nums;
+  font-weight: 550;
+}
+
+.graph-swatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  color: var(--color-graph-other);
+  background: currentColor;
+  box-shadow: 0 0 7px currentColor;
+}
+
+.graph-swatch.python,
+.graph-node circle.python {
+  color: var(--color-graph-python);
+}
+
+.graph-swatch.javascript,
+.graph-node circle.javascript {
+  color: var(--color-graph-javascript);
+}
+
+.graph-swatch.typescript,
+.graph-node circle.typescript {
+  color: var(--color-graph-typescript);
+}
+
+.graph-swatch.other,
+.graph-node circle.other {
+  color: var(--color-graph-other);
+}
+
+.graph-swatch.cycle {
+  color: var(--color-graph-cycle);
+}
+
+.graph-swatch.selected {
+  color: var(--color-graph-selected);
+  background: transparent;
+  border: 2px solid var(--color-graph-selected);
+  box-shadow: 0 0 7px var(--color-graph-selected-glow);
+}
+
 .graph-wrap svg {
   width: 100%;
   height: 620px;
+}
+
+.graph-canvas {
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.graph-canvas.panning {
+  cursor: grabbing;
 }
 
 .edges line {
@@ -677,14 +830,18 @@ dd {
 }
 
 .edges line.active {
-  stroke: var(--color-primary);
+  stroke: var(--color-graph-active-edge);
   stroke-width: 2;
   opacity: 1;
-  filter: drop-shadow(0 0 4px var(--color-primary-glow));
+  filter: drop-shadow(0 0 4px var(--color-graph-path-glow));
 }
 
-.edges marker path {
+#arrow path {
   fill: var(--color-graph-edge);
+}
+
+#arrow-active path {
+  fill: var(--color-graph-active-edge);
 }
 
 .graph-node {
@@ -692,19 +849,21 @@ dd {
 }
 
 .graph-node circle {
-  fill: var(--color-secondary);
+  color: var(--color-graph-other);
+  fill: currentColor;
   stroke: var(--color-bg);
   stroke-width: 3;
+  filter: drop-shadow(0 0 2px currentColor);
 }
 
 .graph-node circle.active {
-  fill: var(--color-primary);
-  stroke: var(--color-primary-hover);
-  filter: drop-shadow(0 0 6px var(--color-primary-glow));
+  stroke: var(--color-graph-selected);
+  stroke-width: 4;
+  filter: drop-shadow(0 0 6px var(--color-graph-selected-glow));
 }
 
 .graph-node circle.risky {
-  fill: var(--color-danger);
+  color: var(--color-graph-cycle);
 }
 
 .graph-node text {
