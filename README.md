@@ -4,6 +4,12 @@ Deterministic architecture analysis and baseline-aware CI governance for Python 
 
 Vinyas builds an evidence-backed dependency graph, finds architecture violations, and helps teams prevent new structural debt without forcing them to fix every legacy issue first. Local AI is optional and can explain findings, but it never creates findings or changes CI outcomes.
 
+## Live demo
+
+Explore Vinyas in the browser: [vinyas-web.pages.dev](https://vinyas-web.pages.dev/)
+
+The hosted explorer can analyze a public GitHub repository's default branch and show its dependency graph, findings, and source evidence.
+
 ## What it does
 
 - Resolves Python packages, namespace-style packages, and relative imports.
