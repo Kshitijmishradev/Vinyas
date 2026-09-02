@@ -4,7 +4,7 @@ dev:
 	bash scripts/dev.sh
 
 dev-backend:
-	ARCHITECT_ROOT=$$(pwd) python -m uvicorn architect.api_server:app --host 127.0.0.1 --port 8000
+	VINYAS_ROOT=$$(pwd) python -m uvicorn architect.api_server:app --host 127.0.0.1 --port 8000
 
 dev-frontend:
 	cd frontend && npm run dev -- --host 127.0.0.1 --port 5173
@@ -21,4 +21,4 @@ lint:
 	cd frontend && npm run lint && npm run build
 
 report:
-	architect report . --format html --output architect-report.html
+	vinyas report . --format html --output vinyas-report.html
