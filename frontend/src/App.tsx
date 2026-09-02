@@ -22,7 +22,7 @@ function App() {
   const jobStatus = job?.status
 
   useEffect(() => {
-    serverHealth().then((health) => setRoot(health.root)).catch(() => setError('Cannot connect to the Architect API.'))
+    serverHealth().then((health) => setRoot(health.root)).catch(() => setError('Cannot connect to the Vinyas API.'))
   }, [])
 
   useEffect(() => {
@@ -74,9 +74,9 @@ function App() {
     <div className="app-shell">
       <header className="topbar">
         <div className="brand-lockup">
-          <div className="brand-mark" aria-hidden="true">A</div>
+          <div className="brand-mark" aria-hidden="true">V</div>
           <div className="brand-copy">
-            <p className="eyebrow">ARCHITECT PRO</p>
+            <p className="eyebrow">VINYAS</p>
             <h1>Architecture governance</h1>
             <p className="root-path" title={root}>{root}</p>
           </div>
@@ -126,7 +126,7 @@ function App() {
         {tab === 'findings' && <main className="workspace"><section className="panel grow"><div className="toolbar"><input aria-label="Filter findings" placeholder="Filter path, message, or evidence" value={query} onChange={(event) => setQuery(event.target.value)} /><select aria-label="Filter by rule" value={rule} onChange={(event) => setRule(event.target.value)}><option value="all">All rules</option>{rules.map((item) => <option key={item}>{item}</option>)}</select></div><FindingList findings={filteredFindings} onSelect={(item) => { setSelectedFinding(item); setExplanation(null) }} selected={selectedFinding?.fingerprint} /></section><EvidencePanel finding={selectedFinding} explanation={explanation} onExplain={async () => { if (!selectedFinding || !job) return; const result = await explainFinding(job.id, selectedFinding.fingerprint); setExplanation({ text: result.explanation, ai: result.ai_generated }) }} /></main>}
         {tab === 'files' && <main className="workspace"><section className="panel grow"><FileTable files={files} onSelect={setSelectedFile} selected={selectedFile} /></section><FilePanel file={selectedFileNode} edges={relatedEdges} /></main>}
         {tab === 'graph' && <main className="workspace"><section className="panel grow"><DependencyGraph files={files} edges={graph.edges} selected={selectedFile} onSelect={setSelectedFile} /></section><FilePanel file={selectedFileNode} edges={relatedEdges} /></main>}
-      </> : !busy && <main className="welcome"><div className="welcome-icon">A</div><h2>Trust the graph before acting on it.</h2><p>Run a deterministic scan to inspect dependencies, cycles, unresolved imports, governance violations, and evidence-backed metrics.</p><button className="button primary" onClick={analyze}>Analyze repository</button></main>}
+      </> : !busy && <main className="welcome"><div className="welcome-icon">V</div><h2>Trust the graph before acting on it.</h2><p>Run a deterministic scan to inspect dependencies, cycles, unresolved imports, governance violations, and evidence-backed metrics.</p><button className="button primary" onClick={analyze}>Analyze repository</button></main>}
     </div>
   )
 }
