@@ -13,7 +13,7 @@ from architect.reports import render_report
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="architect",
+        prog="vinyas",
         description="Deterministic architecture analysis and governance",
     )
     subcommands = parser.add_subparsers(dest="command", required=True)
@@ -66,7 +66,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "serve":
         if not root.is_dir():
             raise SystemExit(f"Repository does not exist: {root}")
-        os.environ["ARCHITECT_ROOT"] = str(root)
+        os.environ["VINYAS_ROOT"] = str(root)
         import uvicorn
 
         uvicorn.run("architect.api_server:app", host=args.host, port=args.port)
